@@ -1,0 +1,191 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: explor 0.1\n"
+"POT-Creation-Date: 2015-12-04 10:11\n"
+"PO-Revision-Date: 2015-12-04 10:11+0100\n"
+"Last-Translator: Julien Barnier <julien@nozav.org>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "obj must be of class CA"
+msgstr "obj doit être de classe CA"
+
+msgid "obj must be of class dudi and coa"
+msgstr "obj doit être de classes dudi et coa"
+
+msgid "None"
+msgstr "Aucun"
+
+msgid "Variable position"
+msgstr "Position"
+
+msgid "Variable type"
+msgstr "Type de variable"
+
+msgid "Points color :"
+msgstr "Couleur :"
+
+msgid "Points symbol :"
+msgstr "Symboles :"
+
+msgid "Contribution"
+msgstr "Contribution"
+
+msgid "Squared cosinus"
+msgstr "Cosinus carré"
+
+msgid "Points size :"
+msgstr "Taille :"
+
+msgid "CA"
+msgstr "CA"
+
+msgid "Eigenvalues"
+msgstr "Valeurs propres"
+
+msgid "Dimensions to plot"
+msgstr "Axes à afficher"
+
+msgid "Plot"
+msgstr "Graphique"
+
+msgid "X axis"
+msgstr "Axe X"
+
+msgid "Y axis"
+msgstr "Axe Y"
+
+msgid "Labels size"
+msgstr "Taille des étiquettes"
+
+msgid "Minimum contribution to show label"
+msgstr "Contribution min pour afficher l'étiquette"
+
+msgid "Supplementary levels"
+msgstr "Modalités supplémentaires"
+
+msgid "Animations"
+msgstr "Animations"
+
+msgid "Reset zoom"
+msgstr "Réinitialiser le zoom"
+
+msgid "Export as SVG"
+msgstr "Exporter en SVG"
+
+msgid "Data"
+msgstr "Données"
+
+msgid "Dimension"
+msgstr "Axe"
+
+msgid "Active levels"
+msgstr "Modalités actives"
+
+msgid "Axis"
+msgstr "Axe"
+
+msgid "Percentage of inertia"
+msgstr "Pourcentage d'inertie"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Cos2"
+msgstr "Cosinus carré"
+
+msgid "Contribution:"
+msgstr "Contribution :"
+
+msgid "obj must be of class MCA"
+msgstr "obj doit être de classe MCA"
+
+msgid "obj must be of class dudi and acm"
+msgstr "obj doit être de classes dudi et acm"
+
+msgid "Variable name"
+msgstr "Nom de variable"
+
+msgid "Individual type"
+msgstr "Type d'individu"
+
+msgid "MCA"
+msgstr "ACM"
+
+msgid "Variables plot"
+msgstr "Variables - graphique"
+
+msgid "Supplementary variables"
+msgstr "Variables supplémentaires"
+
+msgid "Variables data"
+msgstr "Variables - données"
+
+msgid "Active variables"
+msgstr "Variables actives"
+
+msgid "Variables \\(\\eta^2\\)"
+msgstr "\\(\\eta^2\\) des variables actives"
+
+msgid "Supplementary variables \\(\\eta^2\\)"
+msgstr "\\(\\eta^2\\) des variables supplémentaires"
+
+msgid "Individuals plot"
+msgstr "Individus - graphique"
+
+msgid "Points size"
+msgstr "Taille des points"
+
+msgid "Points opacity"
+msgstr "Opacité des points"
+
+msgid "Show labels"
+msgstr "Afficher les étiquettes"
+
+msgid "Supplementary individuals"
+msgstr "Individus supplémentaires"
+
+msgid "Individuals data"
+msgstr "Individus - données"
+
+msgid "Active individuals"
+msgstr "Individus actifs"
+
+msgid "Variable"
+msgstr "Variable"
+
+msgid "obj must be of class PCA"
+msgstr "obj doit être de classe PCA"
+
+msgid "obj must be of class dudi and pca"
+msgstr "obj doit être de classes dudi et pca"
+
+msgid "PCA"
+msgstr "ACP"
+
+msgid "the ade4 package is needed for this function to work."
+msgstr "le package ade4 doit être installé pour utiliser cette fonction."
+
+msgid "obj must be of class coa"
+msgstr "obj doit être de classe coa"
+
+#~ msgid "Max p-value"
+#~ msgstr "p-value maximale"
+
+#~ msgid "Correlation:"
+#~ msgstr "Corrélation :"
+
+#~ msgid "explor - MCA"
+#~ msgstr "explor - ACM"
+
+#~ msgid "Variables Î·Â²"
+#~ msgstr "η² des variables"
+
+#~ msgid "Supplementary variables Î·Â²"
+#~ msgstr "η² des variables supplémentaires"

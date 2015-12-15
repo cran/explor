@@ -1,0 +1,173 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: explor 0.1\n"
+"POT-Creation-Date: 2015-12-04 10:11\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "obj must be of class CA"
+msgstr ""
+
+msgid "obj must be of class dudi and coa"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Variable position"
+msgstr ""
+
+msgid "Variable type"
+msgstr ""
+
+msgid "Points color :"
+msgstr ""
+
+msgid "Points symbol :"
+msgstr ""
+
+msgid "Contribution"
+msgstr ""
+
+msgid "Squared cosinus"
+msgstr ""
+
+msgid "Points size :"
+msgstr ""
+
+msgid "CA"
+msgstr ""
+
+msgid "Eigenvalues"
+msgstr ""
+
+msgid "Dimensions to plot"
+msgstr ""
+
+msgid "Plot"
+msgstr ""
+
+msgid "X axis"
+msgstr ""
+
+msgid "Y axis"
+msgstr ""
+
+msgid "Labels size"
+msgstr ""
+
+msgid "Minimum contribution to show label"
+msgstr ""
+
+msgid "Supplementary levels"
+msgstr ""
+
+msgid "Animations"
+msgstr ""
+
+msgid "Reset zoom"
+msgstr ""
+
+msgid "Export as SVG"
+msgstr ""
+
+msgid "Data"
+msgstr ""
+
+msgid "Dimension"
+msgstr ""
+
+msgid "Active levels"
+msgstr ""
+
+msgid "Axis"
+msgstr ""
+
+msgid "Percentage of inertia"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "Cos2"
+msgstr ""
+
+msgid "Contribution:"
+msgstr ""
+
+msgid "obj must be of class MCA"
+msgstr ""
+
+msgid "obj must be of class dudi and acm"
+msgstr ""
+
+msgid "Variable name"
+msgstr ""
+
+msgid "Individual type"
+msgstr ""
+
+msgid "MCA"
+msgstr ""
+
+msgid "Variables plot"
+msgstr ""
+
+msgid "Supplementary variables"
+msgstr ""
+
+msgid "Variables data"
+msgstr ""
+
+msgid "Active variables"
+msgstr ""
+
+msgid "Variables \\(\\eta^2\\)"
+msgstr ""
+
+msgid "Supplementary variables \\(\\eta^2\\)"
+msgstr ""
+
+msgid "Individuals plot"
+msgstr ""
+
+msgid "Points size"
+msgstr ""
+
+msgid "Points opacity"
+msgstr ""
+
+msgid "Show labels"
+msgstr ""
+
+msgid "Supplementary individuals"
+msgstr ""
+
+msgid "Individuals data"
+msgstr ""
+
+msgid "Active individuals"
+msgstr ""
+
+msgid "Variable"
+msgstr ""
+
+msgid "obj must be of class PCA"
+msgstr ""
+
+msgid "obj must be of class dudi and pca"
+msgstr ""
+
+msgid "PCA"
+msgstr ""
+
+msgid "the ade4 package is needed for this function to work."
+msgstr ""
+
+msgid "obj must be of class coa"
+msgstr ""
