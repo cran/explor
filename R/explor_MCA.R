@@ -76,6 +76,7 @@ explor.acm <- function(obj) {
 
 
 ##' @import shiny
+##' @import shinyBS
 ##' @import dplyr
 ##' @import scatterD3
 ##' @import ggplot2
@@ -115,10 +116,12 @@ explor_mca <- function(res, settings) {
   ind_col_choices <- c("None", "Type")
   names(ind_col_choices) <- c(gettext("None", domain = "R-explor"),
                               gettext("Individual type", domain = "R-explor"))
+  ind_col_choices <- c(ind_col_choices, names(res$quali_data))
+  ind_col_choices <- setdiff(ind_col_choices, "Name")
   ind_col_input <- selectInput("ind_col", 
                                gettext("Points color :", domain = "R-explor"),
                                choices = ind_col_choices,
-                               selected = "Type")
+                               selected = "None")
 
   has_sup_ind <- "Supplementary" %in% res$ind$Type
 
@@ -151,6 +154,9 @@ explor_mca <- function(res, settings) {
                                       sliderInput("var_lab_size", 
                                                   gettext("Labels size", domain = "R-explor"),
                                                   4, 20, 10),
+                                      sliderInput("var_point_size", 
+                                                  gettext("Points size", domain = "R-explor"),
+                                                  4, 128, 56),                                      
                                       numericInput("var_lab_min_contrib",
                                                   gettext("Minimum contribution to show label", domain = "R-explor"),
                                                   min = 0, max = ceiling(2*max(res$vars$Contrib, na.rm = TRUE)), value = 0),
@@ -164,10 +170,14 @@ explor_mca <- function(res, settings) {
                                       checkboxInput("var_transitions", 
                                                     HTML(gettext("Animations", domain = "R-explor")),
                                                     value = TRUE),
-                                      tags$p(actionButton("imca-var-reset-zoom", 
+                                      tags$p(actionButton("explor-var-reset-zoom", 
                                                           title = gettext("Reset zoom", domain = "R-explor"),
                                                           HTML("<span class='glyphicon glyphicon-search' aria-hidden='true'></span>")),
-                                             tags$a(id = "imca-var-svg-export", href = "#",
+                                             actionButton("explor-var-lasso-toggle", 
+                                                          title = gettext("Toggle lasso", domain = "R-explor"),
+                                                          HTML("<span class='glyphicon glyphicon-screenshot' aria-hidden='true'></span>"), 
+                                                          "data-toggle" = "button"),
+                                             tags$a(id = "explor-var-svg-export", href = "#",
                                                     class = "btn btn-default", 
                                                     title = gettext("Export as SVG", domain = "R-explor"),
                                                     HTML("<span class='glyphicon glyphicon-save' aria-hidden='true'></span>"))))),
@@ -223,7 +233,10 @@ explor_mca <- function(res, settings) {
                                                     gettext("Labels size", domain = "R-explor"),
                                                     5, 20, 9)
                                       ),
-                                      if (has_sup_ind) ind_col_input,
+                                      ind_col_input,
+                                      checkboxInput("ind_ellipses", 
+                                                    HTML(gettext("Ellipses", domain = "R-explor")),
+                                                    value = FALSE),
                                       if (has_sup_ind)
                                         checkboxInput("ind_sup", 
                                                       HTML(gettext("Supplementary individuals", domain = "R-explor")),
@@ -231,10 +244,14 @@ explor_mca <- function(res, settings) {
                                       checkboxInput("ind_transitions", 
                                                     HTML(gettext("Animations", domain = "R-explor")),
                                                     value = TRUE),          
-                                      tags$p(actionButton("imca-ind-reset-zoom", 
+                                      tags$p(actionButton("explor-ind-reset-zoom", 
                                                           title = gettext("Reset zoom", domain = "R-explor"),
                                                           HTML("<span class='glyphicon glyphicon-search' aria-hidden='true'></span>")),
-                                             tags$a(id = "imca-ind-svg-export", href = "#",
+                                             actionButton("explor-ind-lasso-toggle", 
+                                                          title = gettext("Toggle lasso", domain = "R-explor"),
+                                                          HTML("<span class='glyphicon glyphicon-screenshot' aria-hidden='true'></span>"), 
+                                                          "data-toggle" = "button"),
+                                             tags$a(id = "explor-ind-svg-export", href = "#",
                                                     class = "btn btn-default", 
                                                     title = gettext("Export as SVG", domain = "R-explor"),
                                                     HTML("<span class='glyphicon glyphicon-save' aria-hidden='true'></span>"))))),                                 column(10,
@@ -254,8 +271,10 @@ explor_mca <- function(res, settings) {
                                       list(h4(gettext("Supplementary individuals", domain = "R-explor")),
                                       DT::dataTableOutput("indtablesup"))
                                     }
-                             )))
-                  
+                             ))),
+                  footer = shinyBS::bsModal(id = "lasso-modal", trigger = NULL,
+                                            title = gettext("Selected points", domain = "R-explor"), 
+                                            tags$p(id = "lasso-mod-content"))
     ),
     
     server = function(input, output) {
@@ -275,13 +294,13 @@ explor_mca <- function(res, settings) {
           arrange(Axis, Type, Variable) %>%
           filter(Axis == input$var_x) %>%
           select_("Variable", "Level", "Type", "Class", "Coord", "Contrib", "Cos2")
-        if (is.null(input$var_sup) || !input$var_sup)
-          tmp_x <- tmp_x %>% filter(Type == 'Active')
         tmp_y <- res$vars %>% 
           filter(Axis == input$var_y) %>%
           select_("Variable", "Level", "Type", "Class", "Coord", "Contrib", "Cos2")
-        if (is.null(input$var_sup) || !input$var_sup)
+        if (is.null(input$var_sup) || !input$var_sup) {
+          tmp_x <- tmp_x %>% filter(Type == 'Active')
           tmp_y <- tmp_y %>% filter(Type == 'Active')
+        }
         tmp <- tmp_x %>%
           left_join(tmp_y, by = c("Variable", "Level", "Type", "Class")) %>%
           mutate(Contrib = Contrib.x + Contrib.y,
@@ -299,7 +318,7 @@ explor_mca <- function(res, settings) {
                                          gettext("Contribution:", domain = "R-explor"),
                                          "</strong> ", Contrib),
                                   sep = "<br />"),
-                 Level = ifelse(Contrib >= as.numeric(input$var_lab_min_contrib) | 
+                 Lab = ifelse(Contrib >= as.numeric(input$var_lab_min_contrib) | 
                                   (is.na(Contrib) & as.numeric(input$var_lab_min_contrib) == 0), Level, ""))
         data.frame(tmp)
       })
@@ -309,32 +328,37 @@ explor_mca <- function(res, settings) {
         col_var <- if (input$var_col == "None") NULL else var_data()[, input$var_col]
         symbol_var <- if (input$var_symbol == "None") NULL else var_data()[, input$var_symbol]
         size_var <- if (input$var_size == "None") NULL else var_data()[, input$var_size]
+        size_range <- if (input$var_size == "None") c(10,300) else c(30,400) * input$var_point_size / 32
         type_var <- ifelse(var_data()[,"Class"] == "Quantitative", "arrow", "point")
         scatterD3::scatterD3(
           x = var_data()[, "Coord.x"],
           y = var_data()[, "Coord.y"],
           xlab = names(res$axes)[res$axes == input$var_x],
           ylab = names(res$axes)[res$axes == input$var_y],
-          lab = var_data()[, "Level"],
+          lab = var_data()[, "Lab"],
           labels_size = input$var_lab_size,
           point_opacity = 1,
+          point_size = input$var_point_size,
           col_var = col_var,
           col_lab = input$var_col,
           symbol_var = symbol_var,
           symbol_lab = input$var_symbol,
           size_var = size_var,
           size_lab = input$var_size,
+          size_range = size_range,
           tooltip_text = var_data()[, "tooltip"],
           type_var = type_var,
           unit_circle = has_sup_vars && input$var_sup && "Quantitative" %in% var_data()[,"Class"],
-          key_var = paste0(var_data()[, "Variable"], var_data()[, "Level"]),
+          key_var = paste(var_data()[, "Variable"], var_data()[, "Level"], sep="-"),
           fixed = TRUE,
           transitions = input$var_transitions,
-          html_id = "imca_var",
-          dom_id_reset_zoom = "imca-var-reset-zoom",
-          dom_id_svg_export = "imca-var-svg-export"
-        )
-      })
+          html_id = "explor_var",
+          dom_id_reset_zoom = "explor-var-reset-zoom",
+          dom_id_svg_export = "explor-var-svg-export",
+          dom_id_lasso_toggle = "explor-var-lasso-toggle",
+          lasso = TRUE,
+          lasso_callback = explor_lasso_callback()
+      )})
       
 
       
@@ -364,6 +388,11 @@ explor_mca <- function(res, settings) {
                                         gettext("Contribution:", domain = "R-explor"),
                                         "</strong> ", Contrib),
                                  sep = "<br />"))
+        if (!(is.null(input$ind_col) || input$ind_col %in% c("None", "Type"))) {
+          tmp_data <- res$quali_data %>% select_("Name", input$ind_col)
+          tmp <- tmp %>%
+            left_join(tmp_data, by="Name")
+        }
         data.frame(tmp)
       })
       
@@ -382,19 +411,23 @@ explor_mca <- function(res, settings) {
           labels_size = input$ind_labels_size,
           col_var = col_var,
           col_lab = input$ind_col,
+          ellipses = input$ind_ellipses,
           tooltip_text = ind_data()[, "tooltip"],
           key_var = ind_data()[, "Name"],
           fixed = TRUE,
           transitions = input$ind_transitions,
-          html_id = "imca_ind",
-          dom_id_reset_zoom = "imca-ind-reset-zoom",
-          dom_id_svg_export = "imca-ind-svg-export"
+          html_id = "explor_ind",
+          dom_id_reset_zoom = "explor-ind-reset-zoom",
+          dom_id_svg_export = "explor-ind-svg-export",
+          dom_id_lasso_toggle = "explor-ind-lasso-toggle",
+          lasso = TRUE,
+          lasso_callback = explor_lasso_callback()
         )
       })
       
-      tableOptions_var <- list(lengthMenu =  c(10,20,50,100), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = FALSE)
+      tableOptions_var <- list(lengthMenu =  c(10,20,50,100), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = TRUE)
       tableOptions_ind <- list(lengthMenu = c(10,20,50,100), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = TRUE)
-      tableOptions_eta2 <- list(lengthMenu = c(10,20,50), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = FALSE)
+      tableOptions_eta2 <- list(lengthMenu = c(10,20,50), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = TRUE)
       
       ## Generate correct datatable order option from a column name
       order_option <- function(table, name, order="desc") {

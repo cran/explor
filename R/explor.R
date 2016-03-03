@@ -56,6 +56,7 @@ explor_css <- function() {
   }
   .well .checkbox { margin-left: 5px !important; }
   .well {padding: 5px !important;}
+  .well .btn { padding: 6px 10px; }
   .dataTable th, 
   .dataTable td {
       font-size: 11px !important;
@@ -73,6 +74,26 @@ explor_css <- function() {
   #varplot, #indplot { height: 90vh !important}
   #eigplot { max-width: 850px; }
   .legend .label { font-weight: normal !important; font-size: 10px !important;}
-  .navbar-nav>li>a { font-size: 13px; padding: 15px 10px;}              
+  .navbar-nav>li>a { font-size: 13px; padding: 15px 10px;}
+  #lasso-mod-content {
+    max-height: 700px;
+    overflow: auto;
+    padding: 10px;
+  }
   ")
+}
+
+
+explor_lasso_callback <- function() {
+  paste("function(sel) {",
+        "var selected = sel.data().map(function(d) {return d.key_var});",
+        "var values = selected.join('<br />');",        
+        "var r_code = 'c(\"' + selected.join('\", \"') + '\")';",
+        "var out = '<h4>", gettext("Identifiers", domain = "R-explor"), "</h4>",
+                  "<p><pre>'+values+'</pre></p>",
+                  "<h4>",gettext("R vector", domain = "R-explor"), "</h4>",
+                  "<p><pre>'+r_code+'</pre></p>';",
+        "$('#lasso-mod-content').html(out);",
+        "$('#lasso-modal').modal();",
+        "}")
 }

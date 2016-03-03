@@ -65,6 +65,7 @@ explor.coa <- function(obj) {
 
 
 ##' @import shiny
+##' @import shinyBS
 ##' @import dplyr
 ##' @import scatterD3
 ##' @import ggplot2
@@ -101,8 +102,22 @@ explor_ca <- function(res, settings) {
                                 gettext("Points size :", domain = "R-explor"),
                                 choices = var_size_choices,
                                 selected = "None")
-
-  shiny::shinyApp(
+  ## Variable hide elements input
+  var_hide_choices <- c("None", "Row", "Column")
+  names(var_hide_choices) <- c(gettext("None", domain = "R-explor"),
+                               gettext("Rows", domain = "R-explor"),
+                               gettext("Columns", domain = "R-explor"))
+  var_hide_input <- selectInput("var_hide", 
+                                gettext("Hide :", domain = "R-explor"),
+                                choices = var_hide_choices,
+                                selected = "None")
+  var_tab_hide_input <- selectInput("var_tab_hide", 
+                                    gettext("Hide :", domain = "R-explor"),
+                                    choices = var_hide_choices,
+                                    selected = "None")
+  
+  
+    shiny::shinyApp(
     ui = navbarPage(gettext("CA", domain = "R-explor"),
                   header = tags$head(
                   tags$style(explor_css())),
@@ -130,13 +145,17 @@ explor_ca <- function(res, settings) {
                                                   choices = res$axes, selected = "2"),
                                       sliderInput("var_lab_size", 
                                                   gettext("Labels size", domain = "R-explor"),
-                                                  4, 20, 10),
+                                                  0, 20, 10),
+                                      sliderInput("var_point_size", 
+                                                  gettext("Points size", domain = "R-explor"),
+                                                  4, 128, 56),                                       
                                       numericInput("var_lab_min_contrib",
                                                    gettext("Minimum contribution to show label", domain = "R-explor"),
                                                    min = 0, max = ceiling(2*max(res$vars$Contrib, na.rm = TRUE)), value = 0),
                                       var_col_input,
                                       var_symbol_input,
                                       var_size_input,
+                                      var_hide_input,
                                       if(has_sup_vars)
                                         checkboxInput("var_sup", 
                                                       HTML(gettext("Supplementary levels", domain = "R-explor")), 
@@ -144,10 +163,10 @@ explor_ca <- function(res, settings) {
                                       checkboxInput("var_transitions", 
                                                     HTML(gettext("Animations", domain = "R-explor")),
                                                     value = TRUE),
-                                      tags$p(actionButton("imca-var-reset-zoom", 
+                                      tags$p(actionButton("explor-var-reset-zoom", 
                                                           title = gettext("Reset zoom", domain = "R-explor"),
                                                           HTML("<span class='glyphicon glyphicon-search' aria-hidden='true'></span>")),
-                                             tags$a(id = "imca-var-svg-export", href = "#",
+                                             tags$a(id = "explor-var-svg-export", href = "#",
                                                     class = "btn btn-default", 
                                                     title = gettext("Export as SVG", domain = "R-explor"),
                                                     HTML("<span class='glyphicon glyphicon-save' aria-hidden='true'></span>"))))),
@@ -161,7 +180,8 @@ explor_ca <- function(res, settings) {
                                     wellPanel(
                                     selectInput("vardim", 
                                                 gettext("Dimension", domain = "R-explor"),
-                                                choices = res$axes, selected = "1")
+                                                choices = res$axes, selected = "1"),
+                                    var_tab_hide_input                                    
                                     )),
                              column(10,
                                     h4(gettext("Active levels", domain = "R-explor")),                   
@@ -170,8 +190,10 @@ explor_ca <- function(res, settings) {
                                       list(h4(gettext("Supplementary levels", domain = "R-explor")),
                                            DT::dataTableOutput("vartablesup"))
                                     }
-                              )))
-                  
+                              ))),
+                  footer = shinyBS::bsModal(id = "lasso-modal", trigger = NULL,
+                                            title = gettext("Selected points", domain = "R-explor"), 
+                                            tags$p(id = "lasso-mod-content"))
     ),
     
     server = function(input, output) {
@@ -190,13 +212,18 @@ explor_ca <- function(res, settings) {
         tmp_x <- res$vars %>% 
           filter(Axis == input$var_x) %>%
           select_("Level", "Position", "Type", "Class", "Coord", "Contrib", "Cos2")
-        if (is.null(input$var_sup) || !input$var_sup)
-          tmp_x <- tmp_x %>% filter(Type == 'Active')
         tmp_y <- res$vars %>% 
           filter(Axis == input$var_y) %>%
           select_("Level", "Position", "Type", "Class", "Coord", "Contrib", "Cos2")
-        if (is.null(input$var_sup) || !input$var_sup)
+        if (is.null(input$var_sup) || !input$var_sup) {
+          tmp_x <- tmp_x %>% filter(Type == 'Active')
           tmp_y <- tmp_y %>% filter(Type == 'Active')
+        }
+        if (input$var_hide != "None") {
+          tmp_x <- tmp_x %>% filter(Position != input$var_hide)
+          tmp_y <- tmp_y %>% filter(Position != input$var_hide)
+        }
+          
         tmp <- tmp_x %>%
           left_join(tmp_y, by = c("Level", "Position", "Type", "Class")) %>%
           mutate(Contrib = Contrib.x + Contrib.y,
@@ -214,7 +241,7 @@ explor_ca <- function(res, settings) {
                                          gettext("Contribution:", domain = "R-explor"),
                                          "</strong> ", Contrib),
                                   sep = "<br />"),
-                 Level = ifelse(Contrib >= as.numeric(input$var_lab_min_contrib) | 
+                 Lab = ifelse(Contrib >= as.numeric(input$var_lab_min_contrib) | 
                                   (is.na(Contrib) & as.numeric(input$var_lab_min_contrib) == 0), Level, ""))                 
         data.frame(tmp)
       })
@@ -224,34 +251,41 @@ explor_ca <- function(res, settings) {
         col_var <- if (input$var_col == "None") NULL else var_data()[, input$var_col]
         symbol_var <- if (input$var_symbol == "None") NULL else var_data()[, input$var_symbol]
         size_var <- if (input$var_size == "None") NULL else var_data()[, input$var_size]
+        size_range <- if (input$var_size == "None") c(10,300) else c(30,400) * input$var_point_size / 32
+        lab  <- if (input$var_lab_size > 0) var_data()[, "Lab"] else NULL
+        key_var <- paste(var_data()[, "Position"], var_data()[, "Level"], sep="-")
         scatterD3::scatterD3(
           x = var_data()[, "Coord.x"],
           y = var_data()[, "Coord.y"],
           xlab = names(res$axes)[res$axes == input$var_x],
           ylab = names(res$axes)[res$axes == input$var_y],
-          lab = var_data()[, "Level"],
+          lab = lab,
           labels_size = input$var_lab_size,
           point_opacity = 1,
+          point_size = input$var_point_size,          
           col_var = col_var,
           col_lab = input$var_col,
           symbol_var = symbol_var,
           symbol_lab = input$var_symbol,
           size_var = size_var,
           size_lab = input$var_size,
+          size_range = size_range,
           tooltip_text = var_data()[, "tooltip"],
-          type_var = NULL,
+          type_var = "point",
           unit_circle = NULL,
-          key_var = paste0(var_data()[, "Level"], var_data()[, "Position"]),
+          key_var = key_var,
           fixed = TRUE,
           transitions = input$var_transitions,
-          html_id = "imca_var",
-          dom_id_reset_zoom = "imca-var-reset-zoom",
-          dom_id_svg_export = "imca-var-svg-export"
+          html_id = "explor_var",
+          dom_id_reset_zoom = "explor-var-reset-zoom",
+          dom_id_svg_export = "explor-var-svg-export",
+          lasso = TRUE,
+          lasso_callback = explor_lasso_callback()
         )
       })
       
 
-      tableOptions_var <- list(lengthMenu =  c(10,20,50,100), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = FALSE)
+      tableOptions_var <- list(lengthMenu =  c(10,20,50,100), pageLength = 10, orderClasses = TRUE, autoWidth = TRUE, searching = TRUE)
 
       ## Generate correct datatable order option from a column name
       order_option <- function(table, name, order="desc") {
@@ -260,9 +294,13 @@ explor_ca <- function(res, settings) {
       }
       
       varTable <- reactive({
-        res$vars %>% 
+        tmp <- res$vars %>% 
           filter(Type == "Active", Axis == input$vardim) %>%
           select_(.dots = settings$var_columns)
+        if (input$var_tab_hide != "None") {
+          tmp <- tmp %>% filter(Position != input$var_tab_hide)
+        }
+        data.frame(tmp)
       })
       output$vartable <- DT::renderDataTable(
         DT::datatable({varTable()}, 
@@ -270,10 +308,14 @@ explor_ca <- function(res, settings) {
       
       ## Supplementary variables
       varTableSup <- reactive({
-        res$vars %>% 
+        tmp <- res$vars %>% 
           filter(Type == "Supplementary", Axis == input$vardim) %>%
           mutate(Level = ifelse(Class == "Quantitative", "-", Level)) %>%
           select_(.dots = settings$varsup_columns)
+        if (input$var_tab_hide != "None") {
+          tmp <- tmp %>% filter(Position != input$var_tab_hide)
+        }
+        data.frame(tmp)
       })
       output$vartablesup <- DT::renderDataTable(
         DT::datatable({varTableSup()}, 

@@ -1,6 +1,9 @@
 # explor
 
 [![Travis-CI Build Status](https://travis-ci.org/juba/explor.svg?branch=master)](https://travis-ci.org/juba/explor)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/explor)](http://cran.r-project.org/package=explor)
+![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/explor) 
+
 
 `explor` is an R package to allow interactive exploration of multivariate analysis results.
 
@@ -11,9 +14,9 @@ Analysis | Function  | Package | Notes
 Principal component analysis  | PCA  | [FactoMineR](http://factominer.free.fr/) | Qualitative supplementary variables are ignored
 Correspondance analysis  | CA  | [FactoMineR](http://factominer.free.fr/) | -
 Multiple correspondence analysis  | MCA  | [FactoMineR](http://factominer.free.fr/) | -
-Principal component analysis  | dudi.pca  | [ade4](https://cran.r-project.org/web/packages/ade4/) | Qualitative supplementary variables are ignored
-Correspondance analysis  | dudi.coa  | [ade4](https://cran.r-project.org/web/packages/ade4/)  | -
-Multiple correspondence analysis  | dudi.acm  | [ade4](https://cran.r-project.org/web/packages/ade4/) | Quantitative supplementary variables are ignored
+Principal component analysis  | dudi.pca  | [ade4](https://cran.r-project.org/package=ade4) | Qualitative supplementary variables are ignored
+Correspondance analysis  | dudi.coa  | [ade4](https://cran.r-project.org/package=ade4)  | -
+Multiple correspondence analysis  | dudi.acm  | [ade4](https://cran.r-project.org/package=ade4) | Quantitative supplementary variables are ignored
 
 
 ## Features
@@ -27,10 +30,16 @@ Here is a preview of what you will get (note that real colors are much better th
 
 ## Installation
 
-The package is not on CRAN yet, so you'll have to install it from GitHub :
+To get the stable version from CRAN :
 
 ```r
-install.packages("devtools")
+install.packages("explor")
+```
+
+To install the latest dev version from GitHub :
+
+```r
+install.packages("devtools")  # If necessary
 devtools::install_github("juba/scatterD3")
 devtools::install_github("juba/explor")
 ```

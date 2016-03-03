@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: explor 0.1\n"
-"POT-Creation-Date: 2015-12-04 10:11\n"
-"PO-Revision-Date: 2015-12-04 10:11+0100\n"
+"POT-Creation-Date: 2016-03-03 15:02\n"
+"PO-Revision-Date: 2016-03-03 15:03+0100\n"
 "Last-Translator: Julien Barnier <julien@nozav.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -12,6 +12,12 @@ msgstr ""
 "X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Identifiers"
+msgstr "Identifiants"
+
+msgid "R vector"
+msgstr "Vecteur R"
 
 msgid "obj must be of class CA"
 msgstr "obj doit être de classe CA"
@@ -43,6 +49,15 @@ msgstr "Cosinus carré"
 msgid "Points size :"
 msgstr "Taille :"
 
+msgid "Rows"
+msgstr "Lignes"
+
+msgid "Columns"
+msgstr "Colonnes"
+
+msgid "Hide :"
+msgstr "Masquer :"
+
 msgid "CA"
 msgstr "CA"
 
@@ -63,6 +78,9 @@ msgstr "Axe Y"
 
 msgid "Labels size"
 msgstr "Taille des étiquettes"
+
+msgid "Points size"
+msgstr "Taille des points"
 
 msgid "Minimum contribution to show label"
 msgstr "Contribution min pour afficher l'étiquette"
@@ -87,6 +105,9 @@ msgstr "Axe"
 
 msgid "Active levels"
 msgstr "Modalités actives"
+
+msgid "Selected points"
+msgstr "Points sélectionnés"
 
 msgid "Axis"
 msgstr "Axe"
@@ -124,6 +145,9 @@ msgstr "Variables - graphique"
 msgid "Supplementary variables"
 msgstr "Variables supplémentaires"
 
+msgid "Toggle lasso"
+msgstr "Sélection lasso"
+
 msgid "Variables data"
 msgstr "Variables - données"
 
@@ -139,14 +163,14 @@ msgstr "\\(\\eta^2\\) des variables supplémentaires"
 msgid "Individuals plot"
 msgstr "Individus - graphique"
 
-msgid "Points size"
-msgstr "Taille des points"
-
 msgid "Points opacity"
 msgstr "Opacité des points"
 
 msgid "Show labels"
 msgstr "Afficher les étiquettes"
+
+msgid "Ellipses"
+msgstr "Ellipses"
 
 msgid "Supplementary individuals"
 msgstr "Individus supplémentaires"
@@ -169,11 +193,11 @@ msgstr "obj doit être de classes dudi et pca"
 msgid "PCA"
 msgstr "ACP"
 
-msgid "the ade4 package is needed for this function to work."
-msgstr "le package ade4 doit être installé pour utiliser cette fonction."
-
 msgid "obj must be of class coa"
 msgstr "obj doit être de classe coa"
+
+msgid "the ade4 package is needed for this function to work."
+msgstr "le package ade4 doit être installé pour utiliser cette fonction."
 
 #~ msgid "Max p-value"
 #~ msgstr "p-value maximale"
