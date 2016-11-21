@@ -2,8 +2,9 @@ library(FactoMineR)
 context("prepare_results.MCA")
 
 data(hobbies)
-mca <- MCA(hobbies[1:1000,c(1:8,21:23)],quali.sup = 9:10, 
-           quanti.sup = 11, ind.sup = 1:100, graph = FALSE)
+mca <- MCA(hobbies[1:1000,c(1:8,21:23)], quali.sup = 9:10, 
+           quanti.sup = 11, ind.sup = 1:100, excl = c(5, 8),
+           graph = FALSE)
 res <- prepare_results(mca)
 
 test_that("Eigenvalues are equals", {
@@ -66,3 +67,9 @@ test_that("Qualitative data are equal", {
                as.character(hobbies[ids, "Marital status"]))
 })
 
+test_that("Counts are equal" ,{
+    expect_equal(res$vars$Count[res$vars$Level == "Show_0" & res$vars$Axis == 1],
+                 as.numeric(table(hobbies[101:1000, "Show"])["0"]))
+    expect_equal(res$vars$Count[res$vars$Level == "Employee" & res$vars$Axis == 3],
+                 as.numeric(table(hobbies[101:1000, "Profession"])["Employee"]))
+})

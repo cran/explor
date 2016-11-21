@@ -4,10 +4,10 @@ author: "Julien Barnier"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
-  fig_width: 5
-  toc: true
+    fig_width: 5
+    toc: true
 vignette: >
-  %\VignetteIndexEntry{Introduction à explor}
+  %\VignetteIndexEntry{[fr] Exploration interactive de résultats d'ACP/ACM avec `explor`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,19 +21,23 @@ Pour le moment il est utilisable avec les types d'analyses suivants :
 
 Méthode | Fonction  | Package | Notes
 ------------- | ------------- | ---------- | --------
-Analyse en composantes principales  | PCA  | [FactoMineR](http://factominer.free.fr/) | Les variables supplémentaires qualitatives ne sont pas prises en charge
+Analyse en composantes principales  | PCA  | [FactoMineR](http://factominer.free.fr/) | -
 Analyse des correspondances  | CA  | [FactoMineR](http://factominer.free.fr/) | -
 Analyse des correspondances multiples  | MCA  | [FactoMineR](http://factominer.free.fr/) | -
 Analyse en composantes principales | dudi.pca  | [ade4](https://cran.r-project.org/package=ade4) | Les variables supplémentaires qualitatives ne sont pas prises en charge
 Analyse des correspondances   | dudi.coa  | [ade4](https://cran.r-project.org/package=ade4)  | -
 Analyse des correspondances multiples   | dudi.acm  | [ade4](https://cran.r-project.org/package=ade4) | Les variables supplémentaires quantitatives ne sont pas prises en charge
+Analyse des correspondances multiples spécifique | speMCA | [GDAtools](https://cran.r-project.org/package=GDAtools) | Les variables supplémentaires ne sont pas prises en charge
+Analyse des correspondances multiples | mca | [MASS](https://cran.r-project.org/package=MASS) | Les variables supplémentaires ne sont pas prises en charge
+Analyse en composantes principales  | princomp  | stats | Les variables supplémentaires ne sont pas prises en charge
+Analyse en composantes principales  | prcomp  | stats | Les variables supplémentaires ne sont pas prises en charge
 
 
 La philosophie d'`explor` est de n'être qu'une interface de visualisation, et de ne rien "exécuter" par elle-même. Les analyses et calculs se font dans votre script R, et `explor` vous aide seulement à visualiser leurs résultats. L'idée est de conserver l'ensemble des commandes dans les scripts et de ne pas risquer d'être un obstacle à la reproductibilité des analyses.
 
 ## Fonctionnalités
 
-Pour chaque méthode, `explor` lance une interface Web interactive qui s'affiche soit directement dans RStudio, soit dans votre navigateur Web. Cette interface comprend une série d'onglets présentant différents tableaux et graphiques. Ceux-ci sont, autant que possible, "interactifs" : les résultats numériques sont affichés sous forme de tableaux dynamiques triables et filtrables (grâce au package `DT`), et les graphiques, générés pour la plupart par le package `scatterD3`, ont les fonctionnalités suivantes :
+Pour chaque méthode, `explor` lance une interface Web interactive qui s'affiche soit directement dans RStudio, soit dans votre navigateur. Cette interface comprend une série d'onglets présentant différents tableaux et graphiques. Ceux-ci sont, autant que possible, "interactifs" : les résultats numériques sont affichés sous forme de tableaux dynamiques triables et filtrables (grâce au package `DT`), et les graphiques, générés pour la plupart par le package `scatterD3`, ont les fonctionnalités suivantes :
 
 - zoom avec la molette de la souris
 - déplacement avec la souris
@@ -42,6 +46,7 @@ Pour chaque méthode, `explor` lance une interface Web interactive qui s'affiche
 - étiquettes déplaçables
 - sélection de points à l'aide d'un outil de type "lasso"
 - possibilité d'export du graphique actuel au format SVG
+- possibilité de récupérer le code R permettant de reproduire le graphique actuel dans un script ou un document
 - les modifications du graphique se font sous la forme de transitions animées
 
 À noter que les interfaces sont traduites en français.
@@ -50,6 +55,54 @@ Pour chaque méthode, `explor` lance une interface Web interactive qui s'affiche
 ## Utilisation
 
 L'utilisation du package est très simple : il suffit d'appliquer la fonction `explor()` à l'objet résultant d'une méthode prise en charge.
+
+
+### `prcomp`, `princomp` et `MASS::mca`
+
+Pour visualiser les résultats de ces fonctions, il suffit de passer l'objet
+résultat à `explor()`.
+
+Voici un exemple avec une ACP réalisée avec `princomp` :
+
+```r
+data(USArrests)
+pca <- princomp(USArrests, cor = TRUE)
+explor(pca)
+```
+
+`explor` permet de visualiser des individus supplémentaires dont les
+coordonnées ont été calculées avec `predict`. Il suffit de les ajouter comme
+un élément nommé `supi` de l'objet résultat.
+
+Voici un exemple avec `prcomp` :
+
+```r
+pca <- prcomp(USArrests[6:50,], scale. = TRUE)
+pca$supi <- predict(pca, USArrests[1:5,])
+explor(pca)
+```
+
+Pour `MASS::mca`, `explor()` permet également la visualisation de variables
+qualitatives supplémentaires. Leurs coordonnées doivent être ajoutées comme un
+élément nommé `supv` de l'objet résultat. À noter qu'il est également
+préférable d'ajouter manuellement les noms de lignes à l'élément `supi` car
+`predict` ne les conserve pas :
+
+```r
+library(MASS)
+mca <- MASS::mca(farms[4:20, 2:4], nf = 11)
+supi_df <- farms[1:3, 2:4]
+supi <- predict(mca, supi_df, type="row")
+rownames(supi) <- rownames(supi_df)
+mca$supi <- supi
+mca$supv <- predict(mca, farms[4:20, 1, drop=FALSE], type="factor")
+explor(mca)
+```
+
+À noter que les réultats de ces trois fonctions sont assez limités, elles ne
+fournissent que les coordonnées des variables et des individus, pas de
+contributions ou de cosinus carrés par exemple.
+
 
 ### Fonctions de `FactoMineR`
 
@@ -146,7 +199,61 @@ coa$supc <- supcol(coa, col_sup)$cosup
 explor(coa)
 ```
 
+### Fonctions de `GDAtools` 
 
+Les résultats des fonctions de `GDAtools` prises en charge peuvent également être directement passées à `explor()`.
+
+```r
+library(GDAtools)
+data(Music)
+mca <- speMCA(Music[,1:5],excl=c(3,6,9,12,15))
+explor(mca)
+```
+
+Pour ajouter des individus supplémentaires, il est nécessaire de calculer leurs données associées à l'aide de la fonction `indsup`, puis de les ajouter manuellement comme un éléménet nommé `supi` de l'objet résultat. 
+
+Voici un exemple :
+
+```r
+library(GDAtools)
+data(Music)
+mca <- speMCA(Music[3:nrow(Music),1:5],excl=c(3,6,9,12,15))
+mca$supi <- indsup(mca,Music[1:2,1:5])
+explor(mca)
+```
+
+
+## Export des graphiques
+
+`explor` offre deux possibilités pour exporter les graphiques affichés dans l'interface.
+
+### Export SVG
+
+Pour exporter le graphique actuellement affiché au format SVG, cliquez sur le bouton *Exporter en SVG* (icône en bas de la barre latérale gauche), ou choisissez l'entrée *Export to SVG* du menu "engrenage" du graphique.
+
+Le SVG est un format de dessin vectoriel, éditable et redimensionnable sans perte à l'aide d'un logiciel comme [Inkscape](https://inkscape.org/).
+
+La fonction d'export SVG peut rencontrer des problèmes quand elle est effectuée depuis RStudio. Si c'est le cas, ouvrez d'abord `explor` dans un navigateur en cliquant sur *Open in Browser*, avant d'exporter.
+
+
+### Récupérer le code R
+
+L'autre possibilité est de récupérer le code R permettant de générer le graphique actuellement affiché, ce qui permet de le reproduire ensuite dans un script ou un document *Rmarkdown*.
+
+Pour cela, cliquez sur le bouton *Obtenir le code R* en bas de la barre latérale. Une boîte de dialogue s'affiche, vous n'avez plus qu'à copier/coller le code R qui s'y trouve.
+
+À noter que ce code R respecte le zoom effectué sur le graphique au moment de l'export, mais pas les positions des labels. Si vous souhaitez conserver celles-ci, il faut d'abord les enregistrer dans un fichier CSV avec l'entrée *Export labels positions* du menu "Engrenage". Ensuite, dans votre script, chargez ce fichier CSV dans un objet à l'aide de `read.csv` puis passez cet objet à l'argument `export_labels_positions` dans le code généré :
+
+```r
+labels <- read.csv("position_labels.csv")
+res <- explor::prepare_results(mca)
+explor::MCA_var_plot(res, xax = 1, yax = 2,
+    var_sup = TRUE, , var_lab_min_contrib = 0,
+    col_var = "Variable", symbol_var = "Type",
+    size_var = NULL, size_range = c(10, 300),
+    labels_size = 10, point_size = 56,
+    transitions = TRUE, labels_positions = labels)
+```
 
 ## Bugs et commentaires
 
