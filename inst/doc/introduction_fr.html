@@ -12,7 +12,7 @@
 
 <meta name="author" content="Julien Barnier" />
 
-<meta name="date" content="2016-11-21" />
+<meta name="date" content="2016-12-15" />
 
 <title>Exploration interactive de résultats d’ACP/ACM avec explor</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Exploration interactive de résultats d’ACP/ACM avec <code>explor</code></h1>
 <h4 class="author"><em>Julien Barnier</em></h4>
-<h4 class="date"><em>2016-11-21</em></h4>
+<h4 class="date"><em>2016-12-15</em></h4>
 
 
 <div id="TOC">
@@ -258,7 +258,7 @@ pca$supi &lt;-<span class="st"> </span>supi$lisup
 supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(pca, <span class="kw">dudi.pca</span>(sup_var, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)$tab)
 pca$supv &lt;-<span class="st"> </span>supv$cosup
 <span class="kw">explor</span>(pca)</code></pre></div>
-<p>Il est nécessaire de faire la même chose en cas d’éléments supplémentaires pour une analyse des correspondances multiples, mais le calcul des coordonnées des variables supplémentaires est un peu plus compliqué :</p>
+<p>Il est nécessaire de faire la même chose en cas d’éléments supplémentaires pour une analyse des correspondances multiples :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(banque)
 d &lt;-<span class="st"> </span>banque[-(<span class="dv">1</span>:<span class="dv">100</span>),-(<span class="dv">19</span>:<span class="dv">21</span>)]
 ind_sup &lt;-<span class="st"> </span>banque[<span class="dv">1</span>:<span class="dv">100</span>, -(<span class="dv">19</span>:<span class="dv">21</span>)]
@@ -266,12 +266,8 @@ var_sup &lt;-<span class="st"> </span>banque[-(<span class="dv">1</span>:<span c
 acm &lt;-<span class="st"> </span><span class="kw">dudi.acm</span>(d, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)
 ## Variables supplémentaires
 acm$supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(acm, <span class="kw">dudi.acm</span>(var_sup, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)$tab)$cosup
-colw &lt;-<span class="st"> </span>acm$cw*<span class="kw">ncol</span>(d)
-X &lt;-<span class="st"> </span><span class="kw">acm.disjonctif</span>(ind_sup)
-X &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">t</span>(X)/colw) -<span class="st"> </span><span class="dv">1</span>
-X &lt;-<span class="st"> </span><span class="kw">data.frame</span>(X)
 ## Individus supplémentaires
-acm$supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(acm, X)$lisup
+acm$supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(acm, ind_sup)$lisup
 <span class="kw">explor</span>(acm)</code></pre></div>
 <p>Pour une analyse des correspondances simples, on peut afficher des lignes ou colonnes supplémentaires en ajoutant leurs coordonnées à des éléments nommés <code>supr</code> ou <code>supc</code> :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(bordeaux)
