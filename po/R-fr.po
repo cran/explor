@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: explor 0.1\n"
-"POT-Creation-Date: 2016-11-21 10:54\n"
-"PO-Revision-Date: 2016-11-21 10:55+0100\n"
+"POT-Creation-Date: 2017-02-23 16:29\n"
+"PO-Revision-Date: 2017-02-23 16:30+0100\n"
 "Last-Translator: Julien Barnier <julien@nozav.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -94,6 +94,12 @@ msgstr "Symboles :"
 msgid "Individual type"
 msgstr "Type d'individu"
 
+msgid "Fixed"
+msgstr "Constante"
+
+msgid "Points opacity :"
+msgstr "Opacité des points :"
+
 msgid "Rows"
 msgstr "Lignes"
 
@@ -126,6 +132,12 @@ msgstr "Variables supplémentaires qualitatives"
 
 msgid "Dimensions to plot"
 msgstr "Axes à afficher"
+
+msgid "Eigenvalues histogram"
+msgstr "Histogramme des valeurs propres"
+
+msgid "Eigenvalues table"
+msgstr "Tableau des valeurs propres"
 
 msgid "Axis"
 msgstr "Axe"
@@ -193,7 +205,7 @@ msgstr "Variables - données"
 msgid "Individuals plot"
 msgstr "Individus - graphique"
 
-msgid "Points opacity"
+msgid "Fixed points opacity"
 msgstr "Opacité des points"
 
 msgid "Show labels"

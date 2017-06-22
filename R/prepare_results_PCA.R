@@ -20,7 +20,7 @@ prepare_results.PCA <- function(obj) {
     
     ## Variables data coordinates
     vars$varname <- rownames(vars)
-    vars$modname <- NA_character_
+    vars$modname <- ""
     vars$Type <- "Active"
     vars$Class <- "Quantitative"
     
@@ -30,7 +30,7 @@ prepare_results.PCA <- function(obj) {
         vars.quanti.sup$varname <- rownames(obj$quanti.sup$coord)
         vars.quanti.sup$Type <- "Supplementary"
         vars.quanti.sup$Class <- "Quantitative"
-        vars.quanti.sup$modname <- NA_character_
+        vars.quanti.sup$modname <- ""
         vars <- rbind(vars, vars.quanti.sup)
     }
 
@@ -54,25 +54,25 @@ prepare_results.PCA <- function(obj) {
     ## Contributions
     tmp <- data.frame(obj$var$contrib)
     tmp <- tmp %>% mutate(varname = rownames(tmp),
-                          modname = NA_character_,
+                          modname = "",
                           Type = "Active",
                           Class = "Quantitative") %>%
         gather(Axis, Contrib, starts_with("Dim.")) %>%
         mutate(Axis = gsub("Dim.", "", Axis, fixed = TRUE),
                Contrib = round(Contrib, 3))
     
-    vars <- vars %>% left_join(tmp, by = c("varname", "modname", "Type", "Class", "Axis"))
+    vars <- vars %>% left_join(tmp, by = c("varname", "modname", "Type", "Class", "Axis"), na_matches = "na")
     
     ## Cos2
     tmp <- data.frame(obj$var$cos2)
     tmp$varname <- rownames(tmp)
-    tmp$modname <- NA_character_
+    tmp$modname <- ""
     tmp$Type <- "Active"
     tmp$Class <- "Quantitative"
     if (!is.null(obj$quanti.sup)) {
         tmp_sup <- data.frame(obj$quanti.sup$cos2)
         tmp_sup$varname <- rownames(tmp_sup)
-        tmp_sup$modname <- NA_character_
+        tmp_sup$modname <- ""
         tmp_sup$Type <- "Supplementary"
         tmp_sup$Class <- "Quantitative"
         tmp <- tmp %>% bind_rows(tmp_sup)
@@ -89,18 +89,18 @@ prepare_results.PCA <- function(obj) {
         mutate(Axis = gsub("Dim.", "", Axis, fixed = TRUE),
                Cos2 = round(Cos2, 3))
     
-    vars <- vars %>% left_join(tmp, by = c("varname", "modname", "Type", "Class", "Axis"))
+    vars <- vars %>% left_join(tmp, by = c("varname", "modname", "Type", "Class", "Axis"), na_matches = "na")
 
     ## Cor  
     tmp <- data.frame(obj$var$cor)
     tmp$varname <- rownames(tmp)
-    tmp$modname <- NA_character_
+    tmp$modname <- ""
     tmp$Type <- "Active"
     tmp$Class <- "Quantitative"  
     if (!is.null(obj$quanti.sup)) {
         tmp_sup <- data.frame(obj$quanti.sup$cor)
         tmp_sup$varname <- rownames(tmp_sup)
-        tmp_sup$modname <- NA_character_        
+        tmp_sup$modname <- ""
         tmp_sup$Type <- "Supplementary"
         tmp_sup$Class <- "Quantitative"    
         tmp <- tmp %>% bind_rows(tmp_sup)
@@ -109,7 +109,7 @@ prepare_results.PCA <- function(obj) {
         mutate(Axis = gsub("Dim.", "", Axis, fixed = TRUE),
                Cor = round(Cor, 3))
     
-    vars <- vars %>% left_join(tmp, by = c("varname", "modname", "Type", "Class", "Axis"))
+    vars <- vars %>% left_join(tmp, by = c("varname", "modname", "Type", "Class", "Axis"), na_matches = "na")
 
     ## V.test for qualitative supplementary variables
     if (!is.null(obj$quali.sup)) {
@@ -123,7 +123,7 @@ prepare_results.PCA <- function(obj) {
             mutate(Axis = gsub("Dim.", "", Axis, fixed = TRUE),
                    P.value = round(ifelse(V.test >= 0, 2 * (1 - pnorm(V.test)), 2 * pnorm(V.test)), 3),
                    V.test = round(V.test, 2))
-        vars <- vars %>% left_join(tmp_sup, by = c("varname", "modname", "Type", "Class", "Axis"))
+        vars <- vars %>% left_join(tmp_sup, by = c("varname", "modname", "Type", "Class", "Axis"), na_matches = "na")
     }
 
     vars <- vars %>% rename(Variable = varname, Level = modname)
@@ -149,7 +149,7 @@ prepare_results.PCA <- function(obj) {
         mutate(Axis = gsub("Dim.", "", Axis, fixed = TRUE),
                Contrib = round(Contrib, 3))
     
-    ind <- ind %>% left_join(tmp, by = c("Name", "Type", "Axis"))
+    ind <- ind %>% left_join(tmp, by = c("Name", "Type", "Axis"), na_matches = "na")
     
     ## Individuals Cos2
     tmp <- data.frame(obj$ind$cos2)
@@ -165,7 +165,7 @@ prepare_results.PCA <- function(obj) {
         mutate(Axis = gsub("Dim.", "", Axis, fixed = TRUE),
                Cos2 = round(Cos2, 3))
     
-    ind <- ind %>% left_join(tmp, by = c("Name", "Type", "Axis"))
+    ind <- ind %>% left_join(tmp, by = c("Name", "Type", "Axis"), na_matches = "na")
 
     ## Qualitative data for individuals plot color mapping
     quali_data <- obj$call$X[,obj$call$quali.sup$numero, drop = FALSE]

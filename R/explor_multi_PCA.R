@@ -168,8 +168,9 @@ explor_multi_pca <- function(res, settings) {
                ui = navbarPage(gettext("PCA", domain = "R-explor"),
                                header = tags$head(
                                                  tags$style(explor_multi_css())),
+
                                tabPanel(gettext("Eigenvalues", domain = "R-explor"),
-                                        explor_multi_eigenplotUI("eigenplot", res$eig)),
+                                        explor_multi_eigenUI("eigen", res$eig)),
                                
                                tabPanel(gettext("Variables plot", domain = "R-explor"),
                                         fluidRow(
@@ -215,9 +216,13 @@ explor_multi_pca <- function(res, settings) {
                                                        sliderInput("ind_point_size", 
                                                                    gettext("Points size", domain = "R-explor"),
                                                                    8, 128, 64),
-                                                       sliderInput("ind_opacity", 
-                                                                   gettext("Points opacity", domain = "R-explor"),
-                                                                   0, 1, 0.5),
+                                                       explor_multi_ind_opacity_input(settings),
+                                                       conditionalPanel(
+                                                         condition = 'input.ind_opacity_var == "Fixed"',
+                                                         sliderInput("ind_opacity", 
+                                                                     gettext("Fixed points opacity", domain = "R-explor"),
+                                                                     0, 1, 0.5)
+                                                       ),
                                                        checkboxInput("ind_labels_show", 
                                                                      HTML(gettext("Show labels", domain = "R-explor")),
                                                                      value = FALSE),
@@ -225,11 +230,14 @@ explor_multi_pca <- function(res, settings) {
                                                            condition = 'input.ind_labels_show == true',
                                                            sliderInput("ind_labels_size", 
                                                                        gettext("Labels size", domain = "R-explor"),
-                                                                       5, 20, 9)
-                                                       ),
-                                                       if (settings$has_sup_ind) 
+                                                                       5, 20, 9),
+                                                           if (settings$has_contrib) {
+                                                             numericInput("ind_lab_min_contrib",
+                                                                          gettext("Minimum contribution to show label", domain = "R-explor"),
+                                                                          min = 0, max = ceiling(2*max(res$ind$Contrib, na.rm = TRUE)), value = 0) }),
+                                                       if (settings$has_sup_ind || settings$has_quali_sup_vars) 
                                                            explor_multi_ind_col_input(settings, res),
-                                                       if (settings$has_sup_ind) 
+                                                       if (settings$has_sup_ind || settings$has_quali_sup_vars) 
                                                            checkboxInput("ind_ellipses", 
                                                                          HTML(gettext("Ellipses", domain = "R-explor")),
                                                                          value = FALSE),
@@ -247,10 +255,9 @@ explor_multi_pca <- function(res, settings) {
                server = function(input, output) {
 
                    ## Eigenvalues
-                   callModule(explor_multi_eigenplot,
-                              "eigenplot",
+                   callModule(explor_multi_eigen,
+                              "eigen",
                               reactive(res$eig))
-
                    
                    ## Variables plot code
                    varplot_code <- reactive({
@@ -292,15 +299,21 @@ explor_multi_pca <- function(res, settings) {
                    ## Indidivuals plot code
                    indplot_code <- reactive({
                        col_var <- if (!is.null(input$ind_col) && input$ind_col == "None") NULL else input$ind_col
-                       lab_var <- if (input$ind_labels_show) "Name" else NULL
+                       lab_var <- if (input$ind_labels_show) "Lab" else NULL
+                       opacity_var <- if (!is.null(input$ind_opacity_var) && input$ind_opacity_var == "Fixed") NULL else input$ind_opacity_var
                        ellipses <- !is.null(input$ind_ellipses) && input$ind_ellipses
+                       ind_lab_min_contrib <- if (settings$has_contrib) input$ind_lab_min_contrib else 0
+                       
+                       
                        paste0("explor::PCA_ind_plot(res, ",
                               "xax = ", input$ind_x, ", yax = ", input$ind_y, ", ",
                               "ind_sup = ", settings$has_sup_ind && input$ind_sup, ",\n",
+                              "    lab_var = ", deparse(substitute(lab_var)), ", ",
+                              ", ind_lab_min_contrib = ", ind_lab_min_contrib, ",\n",
                               "    col_var = ", deparse(substitute(col_var)), ", ",
-                              "lab_var = ", deparse(substitute(lab_var)), ", ",
                               "labels_size = ", input$ind_labels_size, ",\n",
                               "    point_opacity = ", input$ind_opacity, ", ",
+                              "opacity_var = ", deparse(substitute(opacity_var)), ", ",
                               "point_size = ", input$ind_point_size, ",\n",
                               "    ellipses = ", ellipses, ", ",
                               "transitions = ", input$ind_transitions,
