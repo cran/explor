@@ -1,8 +1,8 @@
 Package: explor
 Type: Package
 Title: Interactive Interfaces for Results Exploration
-Version: 0.3.2
-Date: 2017-06-22
+Version: 0.3.3
+Date: 2017-10-10
 Authors@R: c(person("Julien", "Barnier", email="julien.barnier@ens-lyon.fr",
     role=c("aut","cre")))
 Maintainer: Julien Barnier <julien.barnier@ens-lyon.fr>
@@ -18,7 +18,7 @@ Suggests: FactoMineR, ade4 (>= 1.7-5), GDAtools, MASS, testthat, knitr,
         rmarkdown
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2017-06-22 09:55:34 UTC; julien
+Packaged: 2017-10-10 13:46:36 UTC; julien
 Author: Julien Barnier [aut, cre]
 Repository: CRAN
-Date/Publication: 2017-06-22 10:08:21 UTC
+Date/Publication: 2017-10-10 14:00:19 UTC

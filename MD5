@@ -1,6 +1,6 @@
-0439f2411407027a23551b41bc5207d4 *DESCRIPTION
+f4cf6a04942adb6c1791bf8e7dcf456b *DESCRIPTION
 f4b2511085eac2cbadf1919af330a826 *NAMESPACE
-88d7a68a566ce5f50c5a38024c164dc2 *NEWS
+dfbcfcdf7e546902115a4b499b4d7900 *NEWS
 fc5dc3c90e86179da5715e64242ea62f *R/CA_plots.R
 8b1d28243048cbb7d2aa91c4799a7f8b *R/MCA_plots.R
 d405f2d7522aa28a853b2779e7796c30 *R/PCA_plots.R
@@ -22,11 +22,11 @@ ef4f4cd42460223771032992350213df *R/prepare_results_dudi_mca.R
 23c35aa6722a7c695a0ad65e58f688dc *R/prepare_results_princomp.R
 766a64b25901718ab4185ea4b3b06ce9 *R/prepare_results_speMCA.R
 27f8386654b0c1d68a452a0d7b6ac75c *README.md
-582ec3184de59f27f91d3dac8549bf09 *build/vignette.rds
+947c079058e5ef2d0ef08c39b291f43b *build/vignette.rds
 3d2d0e4e6e2345d8a7503aa0ced1a59d *inst/doc/introduction_en.Rmd
-92ac5da97d9994fc9b2b60f37633f329 *inst/doc/introduction_en.html
+88515fb139d973bc340d46e831d8d91e *inst/doc/introduction_en.html
 93dd0e06e78dad263b13a959a8ff8460 *inst/doc/introduction_fr.Rmd
-79acc99e4f86805c8bed295e26d182c1 *inst/doc/introduction_fr.html
+138202a37927bf01948181a10003cfeb *inst/doc/introduction_fr.html
 16f3d88eac71698ab69b0ef2efd95ea7 *inst/po/en@quot/LC_MESSAGES/R-explor.mo
 2e555e16cd0930b0e5575500b035b592 *inst/po/fr/LC_MESSAGES/R-explor.mo
 49ce795d229bbec73131d607fee60117 *man/CA_var_plot.Rd
@@ -42,10 +42,10 @@ a74ccb65a91b21b3e31f1226e611f101 *man/PCA_var_plot.Rd
 2e555e16cd0930b0e5575500b035b592 *po/R-fr.mo
 83a6bbb3eb362957466278e2d6d6f06c *po/R-fr.po
 f263b3a38935ca62bc5c507a56639236 *tests/testthat.R
-bbd6cdd7dbb695c069a218b0a769f4d0 *tests/testthat/test_prepare_results_CA.R
+655e90811648bd85a2faa5cf0b2a9373 *tests/testthat/test_prepare_results_CA.R
 11fdcadc82055a9c3a4fb140206e63da *tests/testthat/test_prepare_results_MASS_mca.R
-b324abc85a0b383a2e5484f54ffd2342 *tests/testthat/test_prepare_results_MCA.R
-3b760d25e4ac4d6b777eff8c5d90110d *tests/testthat/test_prepare_results_PCA.R
+adfae20bcde10d654c016b781dec761e *tests/testthat/test_prepare_results_MCA.R
+dcd575d3990a0762392fe4f327304bc2 *tests/testthat/test_prepare_results_PCA.R
 cad2ffc1887226a2588ee8ec7c2ed0f6 *tests/testthat/test_prepare_results_dudi.acm.R
 5a387d1f500548b42610794f524ed622 *tests/testthat/test_prepare_results_dudi.coa.R
 3f952efe754ec55f6232f3cd6492c14c *tests/testthat/test_prepare_results_dudi.pca.R
