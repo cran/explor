@@ -12,7 +12,7 @@
 
 <meta name="author" content="Julien Barnier" />
 
-<meta name="date" content="2017-10-10" />
+<meta name="date" content="2018-09-03" />
 
 <title>Interactive MCA/PCA results exploration with explor</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Interactive MCA/PCA results exploration with explor</h1>
 <h4 class="author"><em>Julien Barnier</em></h4>
-<h4 class="date"><em>2017-10-10</em></h4>
+<h4 class="date"><em>2018-09-03</em></h4>
 
 
 <div id="TOC">
@@ -104,72 +104,72 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Analysis</th>
-<th align="left">Function</th>
-<th align="left">Package</th>
-<th align="left">Notes</th>
+<th>Analysis</th>
+<th>Function</th>
+<th>Package</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Principal component analysis</td>
-<td align="left">PCA</td>
-<td align="left"><a href="http://factominer.free.fr/">FactoMineR</a></td>
-<td align="left">-</td>
+<td>Principal component analysis</td>
+<td>PCA</td>
+<td><a href="http://factominer.free.fr/">FactoMineR</a></td>
+<td>-</td>
 </tr>
 <tr class="even">
-<td align="left">Correspondance analysis</td>
-<td align="left">CA</td>
-<td align="left"><a href="http://factominer.free.fr/">FactoMineR</a></td>
-<td align="left">-</td>
+<td>Correspondance analysis</td>
+<td>CA</td>
+<td><a href="http://factominer.free.fr/">FactoMineR</a></td>
+<td>-</td>
 </tr>
 <tr class="odd">
-<td align="left">Multiple correspondence analysis</td>
-<td align="left">MCA</td>
-<td align="left"><a href="http://factominer.free.fr/">FactoMineR</a></td>
-<td align="left">-</td>
+<td>Multiple correspondence analysis</td>
+<td>MCA</td>
+<td><a href="http://factominer.free.fr/">FactoMineR</a></td>
+<td>-</td>
 </tr>
 <tr class="even">
-<td align="left">Principal component analysis</td>
-<td align="left">dudi.pca</td>
-<td align="left"><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
-<td align="left">Qualitative supplementary variables are ignored</td>
+<td>Principal component analysis</td>
+<td>dudi.pca</td>
+<td><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
+<td>Qualitative supplementary variables are ignored</td>
 </tr>
 <tr class="odd">
-<td align="left">Correspondance analysis</td>
-<td align="left">dudi.coa</td>
-<td align="left"><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
-<td align="left">-</td>
+<td>Correspondance analysis</td>
+<td>dudi.coa</td>
+<td><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
+<td>-</td>
 </tr>
 <tr class="even">
-<td align="left">Multiple correspondence analysis</td>
-<td align="left">dudi.acm</td>
-<td align="left"><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
-<td align="left">Quantitative supplementary variables are ignored</td>
+<td>Multiple correspondence analysis</td>
+<td>dudi.acm</td>
+<td><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
+<td>Quantitative supplementary variables are ignored</td>
 </tr>
 <tr class="odd">
-<td align="left">Specific Multiple Correspondance Analysis</td>
-<td align="left">speMCA</td>
-<td align="left"><a href="https://cran.r-project.org/package=GDAtools">GDAtools</a></td>
-<td align="left">Supplementary variables are not supported</td>
+<td>Specific Multiple Correspondance Analysis</td>
+<td>speMCA</td>
+<td><a href="https://cran.r-project.org/package=GDAtools">GDAtools</a></td>
+<td>Supplementary variables are not supported</td>
 </tr>
 <tr class="even">
-<td align="left">Multiple Correspondance Analysis</td>
-<td align="left">mca</td>
-<td align="left"><a href="https://cran.r-project.org/package=MASS">MASS</a></td>
-<td align="left">Quantitative supplementary variables are not supported</td>
+<td>Multiple Correspondance Analysis</td>
+<td>mca</td>
+<td><a href="https://cran.r-project.org/package=MASS">MASS</a></td>
+<td>Quantitative supplementary variables are not supported</td>
 </tr>
 <tr class="odd">
-<td align="left">Principal Component Analysis</td>
-<td align="left">princomp</td>
-<td align="left">stats</td>
-<td align="left">Supplementary variables are ignored</td>
+<td>Principal Component Analysis</td>
+<td>princomp</td>
+<td>stats</td>
+<td>Supplementary variables are ignored</td>
 </tr>
 <tr class="even">
-<td align="left">Principal Component Analysis</td>
-<td align="left">prcomp</td>
-<td align="left">stats</td>
-<td align="left">Supplementary variables are ignored</td>
+<td>Principal Component Analysis</td>
+<td>prcomp</td>
+<td>stats</td>
+<td>Supplementary variables are ignored</td>
 </tr>
 </tbody>
 </table>
@@ -203,17 +203,17 @@ pca &lt;-<span class="st"> </span><span class="kw">princomp</span>(USArrests, <s
 <span class="kw">explor</span>(pca)</code></pre></div>
 <p><code>explor</code> supports the visualization of supplementary individuals whose scores have been computed with <code>predict</code>. You just have to add them as a <code>supi</code> element to your result object.</p>
 <p>Here is an example with <code>prcomp</code> :</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(USArrests[<span class="dv">6</span>:<span class="dv">50</span>,], <span class="dt">scale. =</span> <span class="ot">TRUE</span>)
-pca$supi &lt;-<span class="st"> </span><span class="kw">predict</span>(pca, USArrests[<span class="dv">1</span>:<span class="dv">5</span>,])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(USArrests[<span class="dv">6</span><span class="op">:</span><span class="dv">50</span>,], <span class="dt">scale. =</span> <span class="ot">TRUE</span>)
+pca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">predict</span>(pca, USArrests[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,])
 <span class="kw">explor</span>(pca)</code></pre></div>
 <p>For <code>MASS::mca</code>, <code>explor()</code> also supports qualitative supplementary variables. You must include their predicted coordinates to a <code>supv</code> element. It’s also best to manually add row names to the <code>supi</code>data, if any :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
-mca &lt;-<span class="st"> </span>MASS::<span class="kw">mca</span>(farms[<span class="dv">4</span>:<span class="dv">20</span>, <span class="dv">2</span>:<span class="dv">4</span>], <span class="dt">nf =</span> <span class="dv">11</span>)
-supi_df &lt;-<span class="st"> </span>farms[<span class="dv">1</span>:<span class="dv">3</span>, <span class="dv">2</span>:<span class="dv">4</span>]
+mca &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mca</span>(farms[<span class="dv">4</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">nf =</span> <span class="dv">11</span>)
+supi_df &lt;-<span class="st"> </span>farms[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>]
 supi &lt;-<span class="st"> </span><span class="kw">predict</span>(mca, supi_df, <span class="dt">type=</span><span class="st">&quot;row&quot;</span>)
 <span class="kw">rownames</span>(supi) &lt;-<span class="st"> </span><span class="kw">rownames</span>(supi_df)
-mca$supi &lt;-<span class="st"> </span>supi
-mca$supv &lt;-<span class="st"> </span><span class="kw">predict</span>(mca, farms[<span class="dv">4</span>:<span class="dv">20</span>, <span class="dv">1</span>, <span class="dt">drop=</span><span class="ot">FALSE</span>], <span class="dt">type=</span><span class="st">&quot;factor&quot;</span>)
+mca<span class="op">$</span>supi &lt;-<span class="st"> </span>supi
+mca<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">predict</span>(mca, farms[<span class="dv">4</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">1</span>, <span class="dt">drop=</span><span class="ot">FALSE</span>], <span class="dt">type=</span><span class="st">&quot;factor&quot;</span>)
 <span class="kw">explor</span>(mca)</code></pre></div>
 <p>Note that the results of these three functions are quite limited : they provide variables and individuals coordinates, but no contributions or squared cosinus.</p>
 </div>
@@ -223,17 +223,17 @@ mca$supv &lt;-<span class="st"> </span><span class="kw">predict</span>(mca, farm
 <p>Example with a principal correspondence analysis from <code>FactoMineR::PCA</code> :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(FactoMineR)
 <span class="kw">data</span>(decathlon)
-pca &lt;-<span class="st"> </span><span class="kw">PCA</span>(decathlon[,<span class="dv">1</span>:<span class="dv">12</span>], <span class="dt">quanti.sup =</span> <span class="dv">11</span>:<span class="dv">12</span>)
+pca &lt;-<span class="st"> </span><span class="kw">PCA</span>(decathlon[,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>], <span class="dt">quanti.sup =</span> <span class="dv">11</span><span class="op">:</span><span class="dv">12</span>)
 <span class="kw">explor</span>(pca)</code></pre></div>
 <p>Example with a simple correspondence analysis from <code>FactoMiner::CA</code> :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(children)
-res.ca &lt;-<span class="st"> </span><span class="kw">CA</span>(children, <span class="dt">row.sup =</span> <span class="dv">15</span>:<span class="dv">18</span>, <span class="dt">col.sup =</span> <span class="dv">6</span>:<span class="dv">8</span>)
+res.ca &lt;-<span class="st"> </span><span class="kw">CA</span>(children, <span class="dt">row.sup =</span> <span class="dv">15</span><span class="op">:</span><span class="dv">18</span>, <span class="dt">col.sup =</span> <span class="dv">6</span><span class="op">:</span><span class="dv">8</span>)
 <span class="kw">explor</span>(res.ca)</code></pre></div>
 <p>Example with a multiple correspondence analysis from <code>FactoMineR::MCA</code> :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(FactoMineR)
 <span class="kw">data</span>(hobbies)
-mca &lt;-<span class="st"> </span><span class="kw">MCA</span>(hobbies[<span class="dv">1</span>:<span class="dv">1000</span>, <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">8</span>,<span class="dv">21</span>:<span class="dv">23</span>)], <span class="dt">quali.sup =</span> <span class="dv">9</span>:<span class="dv">10</span>, 
-           <span class="dt">quanti.sup =</span> <span class="dv">11</span>, <span class="dt">ind.sup =</span> <span class="dv">1</span>:<span class="dv">100</span>)
+mca &lt;-<span class="st"> </span><span class="kw">MCA</span>(hobbies[<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>,<span class="dv">21</span><span class="op">:</span><span class="dv">23</span>)], <span class="dt">quali.sup =</span> <span class="dv">9</span><span class="op">:</span><span class="dv">10</span>, 
+           <span class="dt">quanti.sup =</span> <span class="dv">11</span>, <span class="dt">ind.sup =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)
 <span class="kw">explor</span>(mca)</code></pre></div>
 </div>
 <div id="ade4-functions" class="section level3">
@@ -242,42 +242,42 @@ mca &lt;-<span class="st"> </span><span class="kw">MCA</span>(hobbies[<span clas
 <p>For example, to visualize a simple PCA results :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ade4)
 <span class="kw">data</span>(deug)
-pca &lt;-<span class="st"> </span><span class="kw">dudi.pca</span>(deug$tab, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)
+pca &lt;-<span class="st"> </span><span class="kw">dudi.pca</span>(deug<span class="op">$</span>tab, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)
 <span class="kw">explor</span>(pca)</code></pre></div>
 <p>There’s a bit more work to be done if you want to display supplementary elements, as <code>ade4</code> don’t include them directly in the results analysis.</p>
 <p>For a principal component analysis, you have to compute supplementary individuals (resp. variables) results with <code>suprow</code> (resp. <code>supcol</code>) and add them manually as a <code>supi</code> (resp. <code>supv</code>) element of your result object.</p>
 <p>Here is an example of how to do this :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(deug)
-d &lt;-<span class="st"> </span>deug$tab
-sup_var &lt;-<span class="st"> </span>d[-(<span class="dv">1</span>:<span class="dv">10</span>), <span class="dv">8</span>:<span class="dv">9</span>]
-sup_ind &lt;-<span class="st"> </span>d[<span class="dv">1</span>:<span class="dv">10</span>, -(<span class="dv">8</span>:<span class="dv">9</span>)]
-pca &lt;-<span class="st"> </span><span class="kw">dudi.pca</span>(d[-(<span class="dv">1</span>:<span class="dv">10</span>), -(<span class="dv">8</span>:<span class="dv">9</span>)], <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)
+d &lt;-<span class="st"> </span>deug<span class="op">$</span>tab
+sup_var &lt;-<span class="st"> </span>d[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dv">8</span><span class="op">:</span><span class="dv">9</span>]
+sup_ind &lt;-<span class="st"> </span>d[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">-</span>(<span class="dv">8</span><span class="op">:</span><span class="dv">9</span>)]
+pca &lt;-<span class="st"> </span><span class="kw">dudi.pca</span>(d[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="op">-</span>(<span class="dv">8</span><span class="op">:</span><span class="dv">9</span>)], <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)
 ## Supplementary individuals
 supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(pca, sup_ind)
-pca$supi &lt;-<span class="st"> </span>supi$lisup
+pca<span class="op">$</span>supi &lt;-<span class="st"> </span>supi<span class="op">$</span>lisup
 ## Supplementary variables
-supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(pca, <span class="kw">dudi.pca</span>(sup_var, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)$tab)
-pca$supv &lt;-<span class="st"> </span>supv$cosup
+supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(pca, <span class="kw">dudi.pca</span>(sup_var, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)<span class="op">$</span>tab)
+pca<span class="op">$</span>supv &lt;-<span class="st"> </span>supv<span class="op">$</span>cosup
 <span class="kw">explor</span>(pca)</code></pre></div>
 <p>You have to do the same thing for supplementary elements in a multiple correspondence analysis :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(banque)
-d &lt;-<span class="st"> </span>banque[-(<span class="dv">1</span>:<span class="dv">100</span>),-(<span class="dv">19</span>:<span class="dv">21</span>)]
-ind_sup &lt;-<span class="st"> </span>banque[<span class="dv">1</span>:<span class="dv">100</span>, -(<span class="dv">19</span>:<span class="dv">21</span>)]
-var_sup &lt;-<span class="st"> </span>banque[-(<span class="dv">1</span>:<span class="dv">100</span>),<span class="dv">19</span>:<span class="dv">21</span>]
+d &lt;-<span class="st"> </span>banque[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>),<span class="op">-</span>(<span class="dv">19</span><span class="op">:</span><span class="dv">21</span>)]
+ind_sup &lt;-<span class="st"> </span>banque[<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">-</span>(<span class="dv">19</span><span class="op">:</span><span class="dv">21</span>)]
+var_sup &lt;-<span class="st"> </span>banque[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>),<span class="dv">19</span><span class="op">:</span><span class="dv">21</span>]
 acm &lt;-<span class="st"> </span><span class="kw">dudi.acm</span>(d, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)
 ## Supplementary variables
-acm$supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(acm, <span class="kw">dudi.acm</span>(var_sup, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)$tab)$cosup
+acm<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(acm, <span class="kw">dudi.acm</span>(var_sup, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)<span class="op">$</span>tab)<span class="op">$</span>cosup
 ## Supplementary individuals
-acm$supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(acm, ind_sup)$lisup
+acm<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(acm, ind_sup)<span class="op">$</span>lisup
 <span class="kw">explor</span>(acm)</code></pre></div>
 <p>For simple correspondence analysis, you can add supplementary rows or columns by adding their coordinates to <code>supr</code> and <code>supc</code> elements of your result object :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(bordeaux)
 tab &lt;-<span class="st"> </span>bordeaux
-row_sup &lt;-<span class="st"> </span>tab[<span class="dv">5</span>,-<span class="dv">4</span>]
-col_sup &lt;-<span class="st"> </span>tab[-<span class="dv">5</span>,<span class="dv">4</span>]
-coa &lt;-<span class="st"> </span><span class="kw">dudi.coa</span>(tab[-<span class="dv">5</span>,-<span class="dv">4</span>], <span class="dt">nf =</span> <span class="dv">5</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)
-coa$supr &lt;-<span class="st"> </span><span class="kw">suprow</span>(coa, row_sup)$lisup
-coa$supc &lt;-<span class="st"> </span><span class="kw">supcol</span>(coa, col_sup)$cosup
+row_sup &lt;-<span class="st"> </span>tab[<span class="dv">5</span>,<span class="op">-</span><span class="dv">4</span>]
+col_sup &lt;-<span class="st"> </span>tab[<span class="op">-</span><span class="dv">5</span>,<span class="dv">4</span>]
+coa &lt;-<span class="st"> </span><span class="kw">dudi.coa</span>(tab[<span class="op">-</span><span class="dv">5</span>,<span class="op">-</span><span class="dv">4</span>], <span class="dt">nf =</span> <span class="dv">5</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)
+coa<span class="op">$</span>supr &lt;-<span class="st"> </span><span class="kw">suprow</span>(coa, row_sup)<span class="op">$</span>lisup
+coa<span class="op">$</span>supc &lt;-<span class="st"> </span><span class="kw">supcol</span>(coa, col_sup)<span class="op">$</span>cosup
 <span class="kw">explor</span>(coa)</code></pre></div>
 </div>
 <div id="gdatools-functions" class="section level3">
@@ -286,14 +286,14 @@ coa$supc &lt;-<span class="st"> </span><span class="kw">supcol</span>(coa, col_s
 <p>For example, to visualize a <code>speMCA</code> results :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GDAtools)
 <span class="kw">data</span>(Music)
-mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[,<span class="dv">1</span>:<span class="dv">5</span>],<span class="dt">excl=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">15</span>))
+mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],<span class="dt">excl=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">15</span>))
 <span class="kw">explor</span>(mca)</code></pre></div>
 <p>To display supplementary individuals, you have to compute their data with the <code>indsup</code> function, and add them manually as a <code>supi</code> element of your result object.</p>
 <p>Here is an example :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GDAtools)
 <span class="kw">data</span>(Music)
-mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span>:<span class="kw">nrow</span>(Music),<span class="dv">1</span>:<span class="dv">5</span>],<span class="dt">excl=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">15</span>))
-mca$supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca,Music[<span class="dv">1</span>:<span class="dv">2</span>,<span class="dv">1</span>:<span class="dv">5</span>])
+mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music),<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],<span class="dt">excl=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">15</span>))
+mca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca,Music[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
 <span class="kw">explor</span>(mca)</code></pre></div>
 </div>
 </div>
@@ -312,8 +312,8 @@ mca$supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca,Music[
 <p>To do this, click on the <em>Get R code</em> button on the bottom of the left sidebar. A modal dialog should show up with the R code that you can then copy/paste.</p>
 <p>Please note that this R code keeps track of the current plot zooming, but not of any custom label positioning. If you want to keep those, you have to first save them in a CSV file with <em>Export labels positions</em> gear menu entry. Then, in your R script, read this file in an object with <code>read.csv</code> and pass this object to the <code>export_labels_positions</code> argument in the generated code :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">labels &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;position_labels.csv&quot;</span>)
-res &lt;-<span class="st"> </span>explor::<span class="kw">prepare_results</span>(mca)
-explor::<span class="kw">MCA_var_plot</span>(res, <span class="dt">xax =</span> <span class="dv">1</span>, <span class="dt">yax =</span> <span class="dv">2</span>,
+res &lt;-<span class="st"> </span>explor<span class="op">::</span><span class="kw">prepare_results</span>(mca)
+explor<span class="op">::</span><span class="kw">MCA_var_plot</span>(res, <span class="dt">xax =</span> <span class="dv">1</span>, <span class="dt">yax =</span> <span class="dv">2</span>,
     <span class="dt">var_sup =</span> <span class="ot">TRUE</span>, , <span class="dt">var_lab_min_contrib =</span> <span class="dv">0</span>,
     <span class="dt">col_var =</span> <span class="st">&quot;Variable&quot;</span>, <span class="dt">symbol_var =</span> <span class="st">&quot;Type&quot;</span>,
     <span class="dt">size_var =</span> <span class="ot">NULL</span>, <span class="dt">size_range =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">300</span>),
