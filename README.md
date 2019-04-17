@@ -1,8 +1,9 @@
-# explor
+# explor  <img src="man/figures/logo.png" width="180" align="right" />
+
 
 [![Travis-CI Build Status](https://travis-ci.org/juba/explor.svg?branch=master)](https://travis-ci.org/juba/explor)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/explor)](https://cran.r-project.org/package=explor)
-![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/explor) 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/explor)](https://cran.r-project.org/package=explor)
+![CRAN Downloads](https://cranlogs.r-pkg.org/badges/last-month/explor) 
 
 
 `explor` is an R package to allow interactive exploration of multivariate analysis results.
@@ -42,9 +43,9 @@ install.packages("explor")
 To install the latest dev version from GitHub :
 
 ```r
-install.packages("devtools")  # If necessary
-devtools::install_github("juba/scatterD3")
-devtools::install_github("juba/explor")
+install.packages("remotes")  # If necessary
+remotes::install_github("juba/scatterD3")
+remotes::install_github("juba/explor")
 ```
     
 ## Usage
@@ -74,7 +75,7 @@ explor(mca)
 
 Two vignettes are provided for more detailed documentation :
 
-- [English introduction vignette](https://github.com/juba/explor/blob/master/vignettes/introduction_en.Rmd)
-- [French introduction vignette](https://github.com/juba/explor/blob/master/vignettes/introduction_fr.Rmd)
+- [English introduction vignette](https://juba.github.io/explor/articles/introduction_en.html)
+- [French introduction vignette](https://juba.github.io/explor/articles/introduction_fr.html)
 
 Depending on your system locale settings, the interface is displayed either in english or in french (other languages can be easily added).

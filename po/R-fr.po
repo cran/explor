@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: explor 0.1\n"
-"POT-Creation-Date: 2017-02-23 16:29\n"
-"PO-Revision-Date: 2017-02-23 16:30+0100\n"
+"POT-Creation-Date: 2019-04-16 11:57\n"
+"PO-Revision-Date: 2019-04-16 11:57+0200\n"
 "Last-Translator: Julien Barnier <julien@nozav.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -28,8 +28,17 @@ msgstr "Effectif:"
 msgid "Variable"
 msgstr "Variable"
 
+msgid "Variable level"
+msgstr "Modalité"
+
+msgid "Individual"
+msgstr "Individu"
+
 msgid "Level"
 msgstr "Modalité"
+
+msgid "Export R code"
+msgstr "Obtenir le code R"
 
 msgid "Animations"
 msgstr "Animations"
@@ -63,6 +72,12 @@ msgstr "Individus actifs"
 
 msgid "Supplementary individuals"
 msgstr "Individus supplémentaires"
+
+msgid "X axis"
+msgstr "Axe X"
+
+msgid "Y axis"
+msgstr "Axe Y"
 
 msgid "None"
 msgstr "Aucun"
@@ -99,6 +114,18 @@ msgstr "Constante"
 
 msgid "Points opacity :"
 msgstr "Opacité des points :"
+
+msgid "Automatic labels position"
+msgstr "Position automatique des étiquettes"
+
+msgid "Minimum contribution to show label"
+msgstr "Contribution min pour afficher l'étiquette"
+
+msgid "Active / Supplementary"
+msgstr "Actif / Supplémentaire"
+
+msgid "Variable level / Individual"
+msgstr "Modalité / Individu"
 
 msgid "Rows"
 msgstr "Lignes"
@@ -160,26 +187,14 @@ msgstr "Valeurs propres"
 msgid "Plot"
 msgstr "Graphique"
 
-msgid "X axis"
-msgstr "Axe X"
-
-msgid "Y axis"
-msgstr "Axe Y"
-
 msgid "Labels size"
 msgstr "Taille des étiquettes"
 
 msgid "Points size"
 msgstr "Taille des points"
 
-msgid "Minimum contribution to show label"
-msgstr "Contribution min pour afficher l'étiquette"
-
 msgid "Data"
 msgstr "Données"
-
-msgid "Export R code"
-msgstr "Obtenir le code R"
 
 msgid "obj must be of class MCA"
 msgstr "obj doit être de classe MCA"
@@ -216,6 +231,24 @@ msgstr "Ellipses"
 
 msgid "Individuals data"
 msgstr "Individus - données"
+
+msgid "Biplot"
+msgstr "Biplot"
+
+msgid "Individuals settings"
+msgstr "Affichage des individus"
+
+msgid "Show individuals labels"
+msgstr "Afficher les étiquettes des individus"
+
+msgid "Individuals point size"
+msgstr "Taille des points des individus"
+
+msgid "Variables settings"
+msgstr "Affichage des modalités"
+
+msgid "Variables point size"
+msgstr "Taille des points des modalités"
 
 msgid "obj must be of class PCA"
 msgstr "obj doit être de classe PCA"

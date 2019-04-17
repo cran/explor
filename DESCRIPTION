@@ -1,24 +1,24 @@
 Package: explor
 Type: Package
 Title: Interactive Interfaces for Results Exploration
-Version: 0.3.4
-Date: 2018-09-03
+Version: 0.3.5
+Date: 2019-04-17
 Authors@R: c(person("Julien", "Barnier", email="julien.barnier@ens-lyon.fr",
     role=c("aut","cre")))
 Maintainer: Julien Barnier <julien.barnier@ens-lyon.fr>
 Description: Shiny interfaces and graphical functions for multivariate analysis results exploration.
 License: GPL (>= 3)
 VignetteBuilder: knitr
-URL: https://github.com/juba/explor
+URL: https://juba.github.io/explor/
 BugReports: https://github.com/juba/explor/issues
 Encoding: UTF-8
 Imports: shiny (>= 1.0), DT, dplyr (>= 0.7), tidyr, ggplot2, highr,
-        scatterD3 (>= 0.8.2)
+        formatR, scatterD3 (>= 0.9), RColorBrewer
 Suggests: FactoMineR, ade4 (>= 1.7-13), GDAtools, MASS, testthat,
         knitr, rmarkdown
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2018-09-03 12:18:25 UTC; julien
+Packaged: 2019-04-17 17:25:11 UTC; julien
 Author: Julien Barnier [aut, cre]
 Repository: CRAN
-Date/Publication: 2018-09-13 08:00:03 UTC
+Date/Publication: 2019-04-17 17:50:03 UTC

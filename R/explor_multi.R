@@ -5,6 +5,29 @@ if (getRversion() >= "2.15.1")
                            "starts_with", "Contrib", "Cos2", "varname", "modname", 
                            "V.test", "eta2", "con.tra", "name", "pos", "Axis", "Count"))
 
+
+##' @importFrom formatR tidy_source
+
+code_modal <- function(obj, plot_code, zoom_code) {
+  code <- paste0("res <- explor::prepare_results(", obj, ")\n")
+  code <- paste0(code, plot_code)
+  code <- paste0(code, zoom_code, ")")
+  
+  code <- formatR::tidy_source(text = code, 
+    width.cutoff = 75, 
+    output = FALSE)$text.tidy
+  
+  modalDialog(
+    title = gettext("Export R code"),
+    size = "l",
+    HTML(paste0(explor_multi_export_code_message(),
+      "<pre><code>",
+      paste(highr::hi_html(code), collapse="\n"),
+      "</code></pre>")),
+    easyClose = TRUE)
+}
+
+
 ##' @import shiny
 
 explor_multi_css <- function() {
@@ -37,7 +60,7 @@ explor_multi_css <- function() {
   .dataTables_filter, .dataTables_paginate {
       font-size: 11px !important;
   }
-  #varplot, #indplot { height: 90vh !important}
+  #varplot, #indplot, #biplot { height: 90vh !important}
   #eigplot { max-width: 850px; }
   .legend .label { font-weight: normal !important; font-size: 10px !important;}
   .navbar-nav>li>a { font-size: 13px; padding: 15px 10px;}
@@ -80,17 +103,19 @@ explor_multi_zoom_callback <- function(type = "var") {
 explor_multi_sidebar_footer <- function(type = "var") {
     list(
         checkboxInput(paste0(type, "_transitions"), 
-                      HTML(gettext("Animations", domain = "R-explor")),
+                      HTML(gettext("Animations")),
                       value = TRUE),
-        tags$p(actionButton(paste0("explor-", type, "-lasso-toggle"),
+        if (type != "bi") {
+            tags$p(actionButton(paste0("explor-", type, "-lasso-toggle"),
                           icon = icon("crosshairs"),
-                          label = gettext("Lasso selection", domain = "R-explor"))),
+                          label = gettext("Lasso selection")))
+        },
         tags$p(actionButton(paste0("explor_", type, "_plot_code"),
                           icon = icon("code"),
-                          label = gettext("Get R code", domain = "R-explor"))),
+                          label = gettext("Get R code"))),
         tags$p(tags$a(id = paste0("explor-", type, "-svg-export"),
                           class = "btn btn-default",
-                          HTML(paste(icon("file-image-o"), gettext("Export as SVG", domain = "R-explor"))))))
+                          HTML(paste(icon("file-image-o"), gettext("Export as SVG"))))))
                
 }
 
@@ -128,7 +153,7 @@ explor_multi_zoom_code <- function(zoom_range) {
 
 ## Message displyed in the R code export dialog
 explor_multi_export_code_message <- function () {
-    gettext("<p>Copy/paste the following code to reproduce the displayed plot. Note that custom label positions are not taken into account, use the <em>export label positions</em> menu entry to save  them and add the file content to the <tt>labels_positions</tt> argument.</p>", domain = "R-explor")
+    gettext("<p>Copy/paste the following code to reproduce the displayed plot. Note that custom label positions are not taken into account, use the <em>export label positions</em> menu entry to save  them and add the file content to the <tt>labels_positions</tt> argument.</p>")
 }
 
 ## INDIVIDUAL DATA SHINY MODULE ---------------------------------------------------------
@@ -140,13 +165,13 @@ explor_multi_ind_dataUI <- function(id, settings, axes) {
         column(2,
                wellPanel(
                    selectInput(ns("inddim"), 
-                               gettext("Dimension", domain = "R-explor"),
+                               gettext("Dimension"),
                                choices = axes, selected = "Axis 1"))),
         column(10,
-               h4(gettext("Active individuals", domain = "R-explor")),
+               h4(gettext("Active individuals")),
                DT::dataTableOutput(ns("indtable")),
                if (settings$has_sup_ind) {
-                   list(h4(gettext("Supplementary individuals", domain = "R-explor")),
+                   list(h4(gettext("Supplementary individuals")),
                         DT::dataTableOutput(ns("indtablesup")))
                }
                ))
@@ -181,26 +206,37 @@ explor_multi_ind_data <- function(input, output, session, res, settings) {
 
 ## INPUTS -----------------------------------------------------------------------------
 
+## Axes inputs
+explor_multi_axes_input <- function(res, type) {
+    x_input <- selectInput(paste0(type, "_x"), 
+                            gettext("X axis"), 
+                            choices = res$axes, selected = "1")
+    y_input <- selectInput(paste0(type, "_y"), 
+                            gettext("Y axis"), 
+                            choices = res$axes, selected = "2")
+    return(list(x_input, y_input))
+}
+
 ## Variable size input for MCA and CA
 explor_multi_var_size_input <- function(settings) {
     var_size_choices <- "None"
-    names <- gettext("None", domain = "R-explor")
+    names <- gettext("None")
     if (settings$has_contrib) {
         var_size_choices <- append(var_size_choices, "Contrib")
-        names <- append(names, gettext("Contribution", domain = "R-explor"))
+        names <- append(names, gettext("Contribution"))
     }
     if (settings$has_cos2) {
         var_size_choices <- append(var_size_choices, "Cos2")
-        names <- append(names, gettext("Squared cosinus", domain = "R-explor"))
+        names <- append(names, gettext("Squared cosinus"))
     }
     if (settings$has_count) {
         var_size_choices <- append(var_size_choices, "Count")
-        names <- append(names, gettext("Count", domain = "R-explor"))
+        names <- append(names, gettext("Count"))
     }
     names(var_size_choices) <- names
     var_size_input <- if (length(var_size_choices) > 1) {
         selectInput("var_size", 
-                    gettext("Points size :", domain = "R-explor"),
+                    gettext("Points size :"),
                     choices = var_size_choices,
                     selected = "None")
                       } else NULL
@@ -234,12 +270,12 @@ explor_multi_var_col_input <- function(settings) {
         choices <- c("None", "Position")
         selected <- "Position"
     }
-    names(choices)[choices == "None"] <- gettext("None", domain = "R-explor")
-    names(choices)[choices == "Variable"] <- gettext("Variable name", domain = "R-explor")
-    names(choices)[choices == "Type"] <- gettext("Variable type", domain = "R-explor")
-    names(choices)[choices == "Position"] <- gettext("Variable position", domain = "R-explor")
+    names(choices)[choices == "None"] <- gettext("None")
+    names(choices)[choices == "Variable"] <- gettext("Variable name")
+    names(choices)[choices == "Type"] <- gettext("Variable type")
+    names(choices)[choices == "Position"] <- gettext("Variable position")
     
-    selectInput("var_col", gettext("Points color :", domain = "R-explor"),
+    selectInput("var_col", gettext("Points color :"),
                 choices = choices,  selected = selected)
 }
 
@@ -261,25 +297,25 @@ explor_multi_var_symbol_input <- function(settings) {
         choices <- c("None", "Position")
         selected <- "None"
     }
-    names(choices)[choices == "None"] <- gettext("None", domain = "R-explor")
-    names(choices)[choices == "Variable"] <- gettext("Variable name", domain = "R-explor")
-    names(choices)[choices == "Type"] <- gettext("Variable type", domain = "R-explor")
-    names(choices)[choices == "Position"] <- gettext("Variable position", domain = "R-explor")
+    names(choices)[choices == "None"] <- gettext("None")
+    names(choices)[choices == "Variable"] <- gettext("Variable name")
+    names(choices)[choices == "Type"] <- gettext("Variable type")
+    names(choices)[choices == "Position"] <- gettext("Variable position")
 
-    selectInput("var_symbol", gettext("Points symbol :", domain = "R-explor"),
+    selectInput("var_symbol", gettext("Points symbol :"),
                 choices = choices, selected = selected)   
 }
 
 ## Individual color input
 explor_multi_ind_col_input <- function(settings, res) {
     ind_col_choices <- c("None", "Type")
-    names(ind_col_choices) <- c(gettext("None", domain = "R-explor"),
-                                gettext("Individual type", domain = "R-explor"))
+    names(ind_col_choices) <- c(gettext("None"),
+                                gettext("Individual type"))
     ind_col_choices <- c(ind_col_choices, names(res$quali_data))
     ind_col_choices <- setdiff(ind_col_choices, "Name")
 
     selectInput("ind_col", 
-                gettext("Points color :", domain = "R-explor"),
+                gettext("Points color :"),
                 choices = ind_col_choices,
                 selected = "None")
 }
@@ -287,34 +323,115 @@ explor_multi_ind_col_input <- function(settings, res) {
 ## Individuals opacity input
 explor_multi_ind_opacity_input <- function(settings) {
   ind_opacity_choices <- "Fixed"
-  names <- gettext("Fixed", domain = "R-explor")
+  names <- gettext("Fixed")
   if (settings$has_contrib) {
     ind_opacity_choices <- append(ind_opacity_choices, "Contrib")
-    names <- append(names, gettext("Contribution", domain = "R-explor"))
+    names <- append(names, gettext("Contribution"))
   }
   if (settings$has_cos2) {
     ind_opacity_choices <- append(ind_opacity_choices, "Cos2")
-    names <- append(names, gettext("Squared cosinus", domain = "R-explor"))
+    names <- append(names, gettext("Squared cosinus"))
   }
   names(ind_opacity_choices) <- names
   ind_opacity_input <- if (length(ind_opacity_choices) > 1) {
     selectInput("ind_opacity_var", 
-                gettext("Points opacity :", domain = "R-explor"),
+                gettext("Points opacity :"),
                 choices = ind_opacity_choices,
                 selected = "Fixed")
   } else NULL
   return(ind_opacity_input)
 }
 
+## Auto labels input
+explor_multi_auto_labels_input <- function(data, type) {
+    if (sum(data$Axis == 1) < 100) {
+        checkboxInput(paste0(type, "_auto_labels"),
+                      gettext("Automatic labels position"),
+                      value = FALSE)
+    }
+}
+
+
+## Min contrib to show labels input
+explor_multi_min_contrib_input <- function(data, settings, type) {
+    if (!settings$has_contrib) return(NULL)
+    cmax <- if (type == "bi") NA else ceiling(2 * max(data$Contrib, na.rm = TRUE))
+    numericInput(
+        paste0(type, "_lab_min_contrib"),
+        gettext("Minimum contribution to show label"),
+        min = 0,
+        max = cmax,
+        value = 0)
+}
+
+## Biplot symbol input
+explor_multi_bi_symbol_input <- function(settings) {
+    if (settings$has_sup_vars || settings$has_sup_ind) {
+        choices <- c("None", "Variable", "Type", "Nature")
+        selected <- "Nature"
+    }
+    if (!(settings$has_sup_vars || settings$has_sup_ind)) {
+        choices <- c("None", "Variable", "Nature")
+        selected <- "Nature"
+    }
+    names(choices)[choices == "None"] <- gettext("None")
+    names(choices)[choices == "Variable"] <- gettext("Variable name")
+    names(choices)[choices == "Type"] <- gettext("Active / Supplementary")
+    names(choices)[choices == "Nature"] <- gettext("Variable level / Individual")
+
+    selectInput("bi_symbol", gettext("Points symbol :"),
+                choices = choices, selected = selected)   
+}
+
+## Biplot color input
+explor_multi_bi_col_input <- function(settings) {
+    if (settings$has_sup_vars || settings$has_sup_ind) {
+        choices <- c("None", "Variable", "Type", "Nature")
+        selected <- "Variable"
+    }
+    if (!(settings$has_sup_vars || settings$has_sup_ind)) {
+        choices <- c("None", "Variable", "Nature")
+        selected <- "Variable"
+    }
+    names(choices)[choices == "None"] <- gettext("None")
+    names(choices)[choices == "Variable"] <- gettext("Variable name")
+    names(choices)[choices == "Type"] <- gettext("Active / Supplementary")
+    names(choices)[choices == "Nature"] <- gettext("Variable level / Individual")
+    
+    selectInput("bi_col", gettext("Points color :"),
+                choices = choices,  selected = selected)
+}
+
+## Biplot individuals opacity input
+explor_multi_bi_ind_opacity_input <- function(settings) {
+  bi_opacity_choices <- "Fixed"
+  names <- gettext("Fixed")
+  if (settings$has_contrib) {
+    bi_opacity_choices <- append(bi_opacity_choices, "Contrib")
+    names <- append(names, gettext("Contribution"))
+  }
+  if (settings$has_cos2) {
+    bi_opacity_choices <- append(bi_opacity_choices, "Cos2")
+    names <- append(names, gettext("Squared cosinus"))
+  }
+  names(bi_opacity_choices) <- names
+  bi_opacity_input <- if (length(bi_opacity_choices) > 1) {
+    selectInput("bi_opacity_var", 
+                gettext("Points opacity :"),
+                choices = bi_opacity_choices,
+                selected = "Fixed")
+  } else NULL
+  return(bi_opacity_input)
+}
 
 ## VARIABLE DATA SHINY MODULE ---------------------------------------------------------
 
 ## Hide input choices for CA results
 explor_multi_hide_choices <- function() {
     choices <- c("None", "Row", "Column")
-    names(choices) <- c(gettext("None", domain = "R-explor"),
-                        gettext("Rows", domain = "R-explor"),
-                        gettext("Columns", domain = "R-explor"))
+    names(choices) <- c(gettext("None"),
+                        gettext("Rows"),
+                        gettext("Columns"))
     choices
 }
 
@@ -326,34 +443,34 @@ explor_multi_var_dataUI <- function(id, settings, axes) {
         column(2,
                wellPanel(
                    selectInput(ns("vardim"), 
-                               gettext("Dimension", domain = "R-explor"),
+                               gettext("Dimension"),
                                choices = axes, selected = "1"),
                    if (settings$type == "CA") {
                        selectInput(ns("var_tab_hide"), 
-                                   gettext("Hide :", domain = "R-explor"),
+                                   gettext("Hide :"),
                                    choices = explor_multi_hide_choices(),
                                    selected = "None")
                    }
                )),
         column(10,
-               h4(if(settings$type == "CA") gettext("Active levels", domain = "R-explor")                   
-                  else gettext("Active variables", domain = "R-explor")),
+               h4(if(settings$type == "CA") gettext("Active levels")                   
+                  else gettext("Active variables")),
                DT::dataTableOutput(ns("vartable")),
                if (settings$has_sup_var) {
-                   list(h4(if(settings$type == "CA") gettext("Supplementary levels", domain = "R-explor")                   
-                           else gettext("Supplementary variables", domain = "R-explor")),
+                   list(h4(if(settings$type == "CA") gettext("Supplementary levels")                   
+                           else gettext("Supplementary variables")),
                         DT::dataTableOutput(ns("vartablesup")))
                },
                if (settings$has_var_eta2) {
-                   list(h4(withMathJax(gettext("Variables \\(\\eta^2\\)", domain = "R-explor"))),
+                   list(h4(withMathJax(gettext("Variables \\(\\eta^2\\)"))),
                         DT::dataTableOutput(ns("vartableeta2")))
                },
                if (settings$has_sup_vars && settings$has_varsup_eta2) {
-                   list(h4(gettext("Supplementary variables \\(\\eta^2\\)", domain = "R-explor")),
+                   list(h4(gettext("Supplementary variables \\(\\eta^2\\)")),
                         DT::dataTableOutput(ns("vartablesupeta2")))
                },
                if (settings$type == "PCA" && settings$has_quali_sup_vars) {
-                   list(h4(gettext("Qualitative supplementary variables", domain = "R-explor")),
+                   list(h4(gettext("Qualitative supplementary variables")),
                         DT::dataTableOutput(ns("vartablequalisup")))
                }
                )
@@ -451,14 +568,14 @@ explor_multi_eigenUI <- function(id, eig) {
     fluidRow(
         column(2,
                wellPanel(numericInput(ns("eig_nb"), 
-                                      gettext("Dimensions to plot", domain = "R-explor"), 
+                                      gettext("Dimensions to plot"), 
                                       min = 2, max = max(eig$dim), value = max(eig$dim), 
                                       step = 1))),
         column(5,
-               h4(gettext("Eigenvalues histogram", domain = "R-explor")),
+               h4(gettext("Eigenvalues histogram")),
                plotOutput(ns("eigplot"), height = "500px")),
         column(3, offset = 1,
-               h4(gettext("Eigenvalues table", domain = "R-explor")),
+               h4(gettext("Eigenvalues table")),
                DT::dataTableOutput(ns("eigtab"))))
 }
 
@@ -471,14 +588,14 @@ explor_multi_eigen <- function(input, output, session, eig) {
         tmp$dim <- factor(tmp$dim)
         ggplot(data = tmp) +
           geom_bar(aes_string(x = "dim", y = "percent"), stat = "identity") +
-          scale_x_discrete(gettext("Axis", domain = "R-explor")) +
-          scale_y_continuous(gettext("Percentage of inertia", domain = "R-explor"))
+          scale_x_discrete(gettext("Axis")) +
+          scale_y_continuous(gettext("Percentage of inertia"))
     })
     ## Table
     output$eigtab <- DT::renderDataTable({
         tmp <- eig()[1:nb(),]
         tmp$cumpercent <- cumsum(tmp$percent)
-        names(tmp) <- c(gettext("Axis", domain = "R-explor"), "%", "Cum. %")
+        names(tmp) <- c(gettext("Axis"), "%", "Cum. %")
         dt <- DT::datatable(tmp, rownames = FALSE,
                             options = list(dom = 't', pageLength = nb()))
         dt %>% DT::formatRound(c("%", "Cum. %"), digits = 1)
