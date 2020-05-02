@@ -1,6 +1,5 @@
 ##' @rdname prepare_results
 ##' @aliases prepare_results.MCA
-##' @author Julien Barnier <julien.barnier@@ens-lyon.fr>
 ##' @seealso \code{\link[FactoMineR]{MCA}}
 ##' @import dplyr
 ##' @importFrom tidyr gather
@@ -39,8 +38,13 @@ prepare_results.MCA <- function(obj) {
     ## Supplementary variables coordinates
     if (!is.null(obj$quali.sup)) {
         vars.quali.sup <- data.frame(obj$quali.sup$coord)
-        varnames <- sapply(obj$call$X[, obj$call$quali.sup, drop = FALSE], nlevels)
-        vars.quali.sup$varname <- rep(names(varnames),varnames)
+        if ("tab.disj" %in% names(as.list(obj$call$call))) {
+            varnames <- rownames(obj$quali.sup$coord)
+            vars.quali.sup$varname <- gsub("[._][^._]+?$", "", varnames)
+        } else {
+            varnames <- sapply(obj$call$X[, obj$call$quali.sup, drop = FALSE], nlevels)
+            vars.quali.sup$varname <- rep(names(varnames),varnames)
+        }
         vars.quali.sup$modname <- rownames(vars.quali.sup)
         vars.quali.sup$Type <- "Supplementary"
         vars.quali.sup$Class <- "Qualitative"

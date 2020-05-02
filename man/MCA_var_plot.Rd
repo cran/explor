@@ -4,10 +4,23 @@
 \alias{MCA_var_plot}
 \title{Interactive MCA variables plot}
 \usage{
-MCA_var_plot(res, xax = 1, yax = 2, var_sup = TRUE,
-  var_lab_min_contrib = 0, point_size = 64, col_var = NULL,
-  symbol_var = NULL, size_var = NULL, size_range = c(10, 300),
-  zoom_callback = NULL, in_explor = FALSE, ...)
+MCA_var_plot(
+  res,
+  xax = 1,
+  yax = 2,
+  var_sup = TRUE,
+  var_sup_choice = NULL,
+  var_lab_min_contrib = 0,
+  point_size = 64,
+  labels_prepend_var = FALSE,
+  col_var = NULL,
+  symbol_var = NULL,
+  size_var = NULL,
+  size_range = c(10, 300),
+  zoom_callback = NULL,
+  in_explor = FALSE,
+  ...
+)
 }
 \arguments{
 \item{res}{Result of prepare_results() call}
@@ -18,9 +31,13 @@ MCA_var_plot(res, xax = 1, yax = 2, var_sup = TRUE,
 
 \item{var_sup}{TRUE to display supplementary variables}
 
+\item{var_sup_choice}{list of supplementary variables to display}
+
 \item{var_lab_min_contrib}{Contribution threshold to display points labels}
 
 \item{point_size}{base point size}
+
+\item{labels_prepend_var}{if TRUE, prepend variable names to labels}
 
 \item{col_var}{name of the variable for points color}
 
@@ -38,7 +55,4 @@ MCA_var_plot(res, xax = 1, yax = 2, var_sup = TRUE,
 }
 \description{
 This function generates an HTML widget displaying the variables plot of an MCA result.
-}
-\author{
-Julien Barnier <julien.barnier@ens-lyon.fr>
 }

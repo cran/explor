@@ -4,10 +4,22 @@
 \alias{PCA_var_plot}
 \title{Interactive PCA variables plot}
 \usage{
-PCA_var_plot(res, xax = 1, yax = 2, var_sup = TRUE,
-  var_lab_min_contrib = 0, scale_unit = FALSE, col_var = NULL,
-  size_var = NULL, zoom_callback = NULL, in_explor = FALSE,
-  xlim = NULL, ylim = NULL, ...)
+PCA_var_plot(
+  res,
+  xax = 1,
+  yax = 2,
+  var_sup = TRUE,
+  var_sup_choice = NULL,
+  var_lab_min_contrib = 0,
+  scale_unit = FALSE,
+  col_var = NULL,
+  size_var = NULL,
+  zoom_callback = NULL,
+  in_explor = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  ...
+)
 }
 \arguments{
 \item{res}{Result of prepare_results() call}
@@ -17,6 +29,8 @@ PCA_var_plot(res, xax = 1, yax = 2, var_sup = TRUE,
 \item{yax}{Vertical axis number}
 
 \item{var_sup}{TRUE to display supplementary variables}
+
+\item{var_sup_choice}{list of supplementary variables to display}
 
 \item{var_lab_min_contrib}{Contribution threshold to display points labels}
 
@@ -38,7 +52,4 @@ PCA_var_plot(res, xax = 1, yax = 2, var_sup = TRUE,
 }
 \description{
 This function generates an HTML widget displaying the variables plot of a PCA result.
-}
-\author{
-Julien Barnier <julien.barnier@ens-lyon.fr>
 }

@@ -1,9 +1,9 @@
 # explor  <img src="man/figures/logo.png" width="180" align="right" />
 
 
-[![Travis-CI Build Status](https://travis-ci.org/juba/explor.svg?branch=master)](https://travis-ci.org/juba/explor)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version-ago/explor)](https://cran.r-project.org/package=explor)
 ![CRAN Downloads](https://cranlogs.r-pkg.org/badges/last-month/explor) 
+[![R build status](https://github.com/juba/explor/workflows/R-CMD-check/badge.svg)](https://github.com/juba/explor/actions?query=workflow%3AR-CMD-check)
 
 
 `explor` is an R package to allow interactive exploration of multivariate analysis results.
@@ -22,6 +22,7 @@ Specific Multiple Correspondance Analysis | speMCA | [GDAtools](https://cran.r-p
 Multiple Correspondance Analysis | mca | [MASS](https://cran.r-project.org/package=MASS) | Quantitative supplementary variables are not supported
 Principal Component Analysis  | princomp  | stats | Supplementary variables are ignored
 Principal Component Analysis  | prcomp  | stats | Supplementary variables are ignored
+Correspondance Analysis  | textmodel_ca  | [quanteda.textmodels](https://cran.r-project.org/package=quanteda.textmodels)  | Only coordinates are available
 
 ## Features
 

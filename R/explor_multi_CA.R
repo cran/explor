@@ -29,6 +29,36 @@ explor.CA <- function(obj) {
 
 
 ##' @rdname explor
+##' @aliases explor.textmodel_ca
+##' @export
+
+explor.textmodel_ca <- function(obj) {
+    
+    if (!inherits(obj, "textmodel_ca")) stop("obj must be of class textmodel_ca")
+    
+    ## results preparation
+    res <- prepare_results(obj)
+    
+    ## Settings
+    settings <- list()
+    settings$var_columns <- c("Level", "Position", "Coord")
+    settings$varsup_columns <- c("Level", "Position", "Coord")
+    settings$obj_name <- deparse(substitute(obj))    
+    
+    settings$has_count <- FALSE
+    settings$has_contrib <- FALSE
+    settings$has_cos2 <- FALSE
+    settings$has_var_eta2 <- FALSE
+    settings$has_varsup_eta2 <- FALSE
+    
+    
+    ## Launch interface
+    explor_multi_ca(res, settings)
+    
+}
+
+
+##' @rdname explor
 ##' @aliases explor.coa
 ##' @details 
 ##' If you want to display supplementary individuals or variables and you're using
@@ -46,8 +76,8 @@ explor.CA <- function(obj) {
 ##' row_sup <- tab[5,-4]
 ##' col_sup <- tab[-5,4]
 ##' coa <- dudi.coa(tab[-5,-4], nf = 5, scannf = FALSE)
-##' coa$supr <- suprow(coa, row_sup)$lisup
-##' coa$supc <- supcol(coa, col_sup)$cosup
+##' coa$supr <- suprow(coa, row_sup)
+##' coa$supc <- supcol(coa, col_sup)
 ##' explor(coa)
 ##' }
 
@@ -80,6 +110,7 @@ explor.coa <- function(obj) {
 
 
 
+
 ##' @import shiny
 ##' @import dplyr
 ##' @import scatterD3
@@ -88,7 +119,8 @@ explor.coa <- function(obj) {
 explor_multi_ca <- function(res, settings) { 
     
     ## Precompute inputs 
-    settings$has_sup_vars <- "Supplementary" %in% res$vars$Type
+    settings$has_sup_levels <- "Supplementary level" %in% res$vars$Type
+    settings$has_sup_vars <- "Supplementary variable" %in% res$vars$Type
     settings$type <- "CA"
     
     shiny::shinyApp(
@@ -119,10 +151,17 @@ explor_multi_ca <- function(res, settings) {
                                 gettext("Hide :"),
                                 choices = explor_multi_hide_choices(),
                                 selected = "None"),
-                            if(settings$has_sup_vars)
-                                checkboxInput("var_sup", 
+                            if(settings$has_sup_levels)
+                                checkboxInput("lev_sup", 
                                     HTML(gettext("Supplementary levels")),
                                     value = TRUE),
+                            if(settings$has_sup_vars)
+                                checkboxInput("var_sup", 
+                                    HTML(gettext("Supplementary variables")),
+                                    value = TRUE),
+                            if(settings$has_sup_vars)
+                                conditionalPanel("input.var_sup",
+                                    explor_multi_var_sup_choice_input(res$vars, settings)),
                             explor_multi_sidebar_footer(type = "var"))),
                     column(10,
                         scatterD3Output("varplot", height = "auto"))
@@ -144,15 +183,19 @@ explor_multi_ca <- function(res, settings) {
             varplot_code <- reactive({
                 col_var <- if (input$var_col == "None") NULL else input$var_col
                 symbol_var <- if (input$var_symbol == "None") NULL else input$var_symbol
-                size_var <- if (input$var_size == "None") NULL else input$var_size
-                size_range <- if (input$var_size == "None") c(10,300) else c(30,400) * input$var_point_size / 32
-                var_auto_labels <- if (!is.null(input$var_auto_labels) &&    input$var_auto_labels) "\"auto\"" else "NULL"
+                size_var <- if (is.null(input$var_size) || input$var_size == "None") NULL else input$var_size
+                size_range <- if (is.null(input$var_size) || input$var_size == "None") c(10,300) else c(30,400) * input$var_point_size / 32
+                var_auto_labels <- if (!is.null(input$var_auto_labels) && input$var_auto_labels) "\"auto\"" else "NULL"
+                var_sup <- settings$has_sup_vars && input$var_sup
+                var_sup_choice <- if(var_sup) paste0(utils::capture.output(dput(input$var_sup_choice)), collapse="") else NULL
                 
                 
                 paste0("explor::CA_var_plot(res, ",
                     "xax = ", input$var_x, 
                     ", yax = ", input$var_y,
-                    ", var_sup = ", settings$has_sup_vars && input$var_sup,
+                    ", lev_sup = ", settings$has_sup_levels && input$lev_sup,
+                    ", var_sup = ", var_sup,
+                    ", var_sup_choice = ", var_sup_choice,
                     ", var_hide = '", input$var_hide, "'",
                     ", var_lab_min_contrib = ", input$var_lab_min_contrib,
                     ", col_var = ", deparse(substitute(col_var)),

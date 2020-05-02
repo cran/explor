@@ -46,6 +46,17 @@ explor_multi_css <- function() {
   .well .checkbox { margin-left: 5px !important; }
   .well {padding: 5px !important;}
   .well .btn { padding: 6px 10px; }
+  .well #var_sup_choice .shiny-options-group {
+    max-height: 200px;
+    margin-top: 5px;
+    margin-left: 15px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .well #var_sup_choice .checkbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  } 
   .dataTable th, 
   .dataTable td {
       font-size: 11px !important;
@@ -262,11 +273,11 @@ explor_multi_var_col_input <- function(settings) {
         choices <- c("None", "Variable")
         selected <- "Variable"
     }
-    if (settings$type == "CA" && settings$has_sup_vars) {
+    if (settings$type == "CA" && (settings$has_sup_vars || settings$has_sup_levels)) {
         choices <- c("None", "Position", "Type")
         selected <- "Position"
     }
-    if (settings$type == "CA" && !settings$has_sup_vars) {
+    if (settings$type == "CA" && !(settings$has_sup_vars || settings$has_sup_levels)) {
         choices <- c("None", "Position")
         selected <- "Position"
     }
@@ -289,11 +300,11 @@ explor_multi_var_symbol_input <- function(settings) {
         choices <- c("None", "Variable")
         selected <- "None"
     }
-    if (settings$type == "CA" && settings$has_sup_vars) {
+    if (settings$type == "CA" && (settings$has_sup_vars || settings$has_sup_levels)) {
         choices <- c("None", "Position", "Type")
         selected <- "Type"
     }
-    if (settings$type == "CA" && !settings$has_sup_vars) {
+    if (settings$type == "CA" && !(settings$has_sup_vars || settings$has_sup_levels)) {
         choices <- c("None", "Position")
         selected <- "None"
     }
@@ -344,11 +355,35 @@ explor_multi_ind_opacity_input <- function(settings) {
 
 ## Auto labels input
 explor_multi_auto_labels_input <- function(data, type) {
-    if (sum(data$Axis == 1) < 100) {
+    if (sum(data$Axis == 1) < 200) {
         checkboxInput(paste0(type, "_auto_labels"),
                       gettext("Automatic labels position"),
                       value = FALSE)
     }
+}
+
+
+## Supplementary variables choice input
+explor_multi_var_sup_choice_input <-function(data, settings) {
+  if (settings$type == "CA") {
+    vnames <- data %>% 
+      filter(Type == "Supplementary variable") %>% 
+      select(.data$Level) %>% 
+      distinct() %>% 
+      pull(.data$Level)
+  } else {
+    vnames <- data %>% 
+      filter(Type == "Supplementary") %>% 
+      select(.data$Variable) %>% 
+      distinct() %>% 
+      pull(.data$Variable)
+  }
+  checkboxGroupInput(
+    "var_sup_choice",
+    gettext("Supplementary variables to display"),
+    choices = vnames,
+    selected = vnames
+  )
 }
 
 
@@ -424,6 +459,7 @@ explor_multi_bi_ind_opacity_input <- function(settings) {
   return(bi_opacity_input)
 }
 
+
 ## VARIABLE DATA SHINY MODULE ---------------------------------------------------------
 
 ## Hide input choices for CA results
@@ -456,10 +492,14 @@ explor_multi_var_dataUI <- function(id, settings, axes) {
                h4(if(settings$type == "CA") gettext("Active levels")                   
                   else gettext("Active variables")),
                DT::dataTableOutput(ns("vartable")),
-               if (settings$has_sup_var) {
-                   list(h4(if(settings$type == "CA") gettext("Supplementary levels")                   
-                           else gettext("Supplementary variables")),
-                        DT::dataTableOutput(ns("vartablesup")))
+               if (settings$has_sup_vars || (settings$type == "CA" && settings$has_sup_levels)) {
+                   list(h4(
+                     if(settings$type == "CA") {
+                       gettext("Supplementary elements")
+                     } else {
+                       gettext("Supplementary variables")
+                     }),
+                     DT::dataTableOutput(ns("vartablesup")))
                },
                if (settings$has_var_eta2) {
                    list(h4(withMathJax(gettext("Variables \\(\\eta^2\\)"))),
@@ -504,7 +544,7 @@ explor_multi_var_data <- function(input, output, session, res, settings) {
     ## Supplementary variables
     varTableSup <- reactive({
         tmp <- res()$vars %>% 
-                   filter(Type == "Supplementary", Axis == input$vardim) %>%
+                   filter(grepl("Supplementary", Type), Axis == input$vardim) %>%
                    mutate(Level = ifelse(Class == "Quantitative", "-", Level))
         ## CA data hide option
         if (settings()$type == "CA" && input$var_tab_hide != "None") {
