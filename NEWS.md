@@ -1,3 +1,9 @@
+# explor 0.3.7
+
+* Fix percentage of variance computation for prcomp() and princomp() (thanks @zenn1989)
+* Fix conditional use of suggested packages
+
+
 # explor 0.3.6
 
 * Add support for textmodel_ca
