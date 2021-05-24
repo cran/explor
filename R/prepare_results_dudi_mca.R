@@ -32,7 +32,7 @@ prepare_results.acm <- function(obj) {
     eig <- obj$eig / sum(obj$eig) * 100
     names(axes) <- paste("Axis", axes, paste0("(", head(round(eig, 2), length(axes)),"%)"))
     ## Eigenvalues
-    eig <- data.frame(dim = 1:length(eig), percent = eig)
+    eig <- data.frame(dim = seq_len(length(eig)), percent = eig)
     ## Inertia
     inertia <- ade4::inertia.dudi(obj, row.inertia = TRUE, col.inertia = TRUE)
     
@@ -92,7 +92,6 @@ prepare_results.acm <- function(obj) {
 
     vareta2 <- vareta2 %>% pivot_longer(names_to = "Axis", values_to = "eta2", starts_with("RS")) %>%
         mutate(Axis = gsub("RS", "", Axis, fixed = TRUE))
-    vareta2$eta2 <- format(vareta2$eta2, scientific = FALSE, nsmall = 3, digits = 0)
 
     ## Individuals coordinates
     ind <- obj$li

@@ -1,8 +1,8 @@
 Package: explor
 Type: Package
 Title: Interactive Interfaces for Results Exploration
-Version: 0.3.7
-Date: 2020-12-09
+Version: 0.3.8
+Date: 2021-05-24
 Authors@R: c(person("Julien", "Barnier", email="julien.barnier@cnrs.fr",
     role=c("aut","cre")))
 Maintainer: Julien Barnier <julien.barnier@cnrs.fr>
@@ -18,7 +18,7 @@ Suggests: FactoMineR, ade4 (>= 1.7-13), GDAtools, MASS, quanteda,
         quanteda.textmodels, testthat, knitr, rmarkdown
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-12-09 07:40:08 UTC; julien
+Packaged: 2021-05-24 20:34:30 UTC; julien
 Author: Julien Barnier [aut, cre]
 Repository: CRAN
-Date/Publication: 2020-12-09 09:00:10 UTC
+Date/Publication: 2021-05-24 21:00:03 UTC

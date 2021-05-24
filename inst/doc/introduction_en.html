@@ -12,49 +12,10 @@
 
 <meta name="author" content="Julien Barnier" />
 
-<meta name="date" content="2020-12-09" />
+<meta name="date" content="2021-05-24" />
 
 <title>Interactive MCA/PCA results exploration with explor</title>
 
-<style type="text/css">
-a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
-a.anchor-section::before {content: '#';}
-.hasAnchor:hover a.anchor-section {visibility: visible;}
-</style>
-<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
-document.addEventListener('DOMContentLoaded', function() {
-  // Do nothing if AnchorJS is used
-  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
-    return;
-  }
-
-  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-  // Do nothing if sections are already anchored
-  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
-    return null;
-  }
-
-  // Use section id when pandoc runs with --section-divs
-  const section_id = function(x) {
-    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
-            ? x.id : '');
-  };
-
-  // Add anchors
-  h.forEach(function(x) {
-    const id = x.id || section_id(x.parentElement);
-    if (id === '') {
-      return null;
-    }
-    let anchor = document.createElement('a');
-    anchor.href = '#' + id;
-    anchor.classList = ['anchor-section'];
-    x.classList.add('hasAnchor');
-    x.appendChild(anchor);
-  });
-});
-</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -66,7 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
@@ -152,6 +120,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -349,7 +318,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Interactive MCA/PCA results exploration with explor</h1>
 <h4 class="author">Julien Barnier</h4>
-<h4 class="date">2020-12-09</h4>
+<h4 class="date">2021-05-24</h4>
 
 
 <div id="TOC">
@@ -430,7 +399,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td>Specific Multiple Correspondance Analysis</td>
 <td>speMCA</td>
 <td><a href="https://cran.r-project.org/package=GDAtools">GDAtools</a></td>
-<td>Supplementary variables are not supported</td>
+<td>-</td>
 </tr>
 <tr class="even">
 <td>Multiple Correspondance Analysis</td>
@@ -569,15 +538,17 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>For example, to visualize a <code>speMCA</code> results :</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">library</span>(GDAtools)</a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="kw">data</span>(Music)</a>
-<a class="sourceLine" id="cb11-3" title="3">mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],<span class="dt">excl=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">15</span>))</a>
+<a class="sourceLine" id="cb11-3" title="3">mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">excl =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>))</a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="kw">explor</span>(mca)</a></code></pre></div>
-<p>To display supplementary individuals, you have to compute their data with the <code>indsup</code> function, and add them manually as a <code>supi</code> element of your result object.</p>
-<p>Here is an example :</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">library</span>(GDAtools)</a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="kw">data</span>(Music)</a>
-<a class="sourceLine" id="cb12-3" title="3">mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music),<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>],<span class="dt">excl=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">15</span>))</a>
-<a class="sourceLine" id="cb12-4" title="4">mca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca,Music[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="kw">explor</span>(mca)</a></code></pre></div>
+<p>To display supplementary individuals, you have to compute their data with the <code>indsup</code> function, and add them manually as a <code>supi</code> element of your result object :</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music), <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">excl =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>))</a>
+<a class="sourceLine" id="cb12-2" title="2">mca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca, Music[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">explor</span>(mca)</a></code></pre></div>
+<p>To display supplementary variables, you have to compute their data with the <code>speMCA_varsup</code> function and add them manually as a <code>supv</code> element of your result object :</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music), <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">excl =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>))</a>
+<a class="sourceLine" id="cb13-2" title="2">mca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca, Music[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb13-3" title="3">mca<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">speMCA_varsup</span>(mca, Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music), <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>])</a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="kw">explor</span>(mca)</a></code></pre></div>
 </div>
 </div>
 <div id="exporting-plots" class="section level2">
@@ -594,14 +565,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Another way is to get the R code which allows to generate the current plot. This code can then be used in a script or a <em>Rmarkdown</em> document.</p>
 <p>To do this, click on the <em>Get R code</em> button on the bottom of the left sidebar. A modal dialog should show up with the R code that you can then copy/paste.</p>
 <p>Please note that this R code keeps track of the current plot zooming, but not of any custom label positioning. If you want to keep those, you have to first save them in a CSV file with <em>Export labels positions</em> gear menu entry. Then, in your R script, read this file in an object with <code>read.csv</code> and pass this object to the <code>export_labels_positions</code> argument in the generated code :</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">labels &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;position_labels.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb13-2" title="2">res &lt;-<span class="st"> </span>explor<span class="op">::</span><span class="kw">prepare_results</span>(mca)</a>
-<a class="sourceLine" id="cb13-3" title="3">explor<span class="op">::</span><span class="kw">MCA_var_plot</span>(res, <span class="dt">xax =</span> <span class="dv">1</span>, <span class="dt">yax =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb13-4" title="4">    <span class="dt">var_sup =</span> <span class="ot">TRUE</span>, , <span class="dt">var_lab_min_contrib =</span> <span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb13-5" title="5">    <span class="dt">col_var =</span> <span class="st">&quot;Variable&quot;</span>, <span class="dt">symbol_var =</span> <span class="st">&quot;Type&quot;</span>,</a>
-<a class="sourceLine" id="cb13-6" title="6">    <span class="dt">size_var =</span> <span class="ot">NULL</span>, <span class="dt">size_range =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">300</span>),</a>
-<a class="sourceLine" id="cb13-7" title="7">    <span class="dt">labels_size =</span> <span class="dv">10</span>, <span class="dt">point_size =</span> <span class="dv">56</span>,</a>
-<a class="sourceLine" id="cb13-8" title="8">    <span class="dt">transitions =</span> <span class="ot">TRUE</span>, <span class="dt">labels_positions =</span> labels)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">labels &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;position_labels.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2">res &lt;-<span class="st"> </span>explor<span class="op">::</span><span class="kw">prepare_results</span>(mca)</a>
+<a class="sourceLine" id="cb14-3" title="3">explor<span class="op">::</span><span class="kw">MCA_var_plot</span>(res, <span class="dt">xax =</span> <span class="dv">1</span>, <span class="dt">yax =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb14-4" title="4">    <span class="dt">var_sup =</span> <span class="ot">TRUE</span>, , <span class="dt">var_lab_min_contrib =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb14-5" title="5">    <span class="dt">col_var =</span> <span class="st">&quot;Variable&quot;</span>, <span class="dt">symbol_var =</span> <span class="st">&quot;Type&quot;</span>,</a>
+<a class="sourceLine" id="cb14-6" title="6">    <span class="dt">size_var =</span> <span class="ot">NULL</span>, <span class="dt">size_range =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">300</span>),</a>
+<a class="sourceLine" id="cb14-7" title="7">    <span class="dt">labels_size =</span> <span class="dv">10</span>, <span class="dt">point_size =</span> <span class="dv">56</span>,</a>
+<a class="sourceLine" id="cb14-8" title="8">    <span class="dt">transitions =</span> <span class="ot">TRUE</span>, <span class="dt">labels_positions =</span> labels)</a></code></pre></div>
 </div>
 </div>
 <div id="feedback" class="section level2">
