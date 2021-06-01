@@ -1,6 +1,6 @@
-261abbffc9866f35c8fe05e80c1ea94e *DESCRIPTION
+241eab3d89159f110c380db38bed7bdb *DESCRIPTION
 b9a63f7b26ebe0d85095dbb060890a03 *NAMESPACE
-28f2d9ba22bbb0580c06ce1d09a2133d *NEWS.md
+ef6c9748bf22f4ebae4c3ccb35815c2e *NEWS.md
 c7e8860e131479bf34f7b76323f6d4f6 *R/CA_plots.R
 2979ba6da086b6d504772ce2aaaca9bf *R/MCA_plots.R
 e825f17c7c7fb594f23617e0a70170bf *R/PCA_plots.R
@@ -22,13 +22,13 @@ afa673e58211520b0775856de4ff5f20 *R/prepare_results_dudi_pca.R
 9a73128a03180c760bd9e85e4e587d67 *R/prepare_results_princomp.R
 c7215bd9c085dd03e544217afbfe708e *R/prepare_results_speMCA.R
 50c57aed9299c334183f21a25926260a *R/prepare_results_textmodel_ca.R
-a1400c801dd67f5e6b2526f861c87ea8 *R/utils.R
+8a105695d465035c8c67c19f678bb1fc *R/utils.R
 6e195c9f514e5e79fcf961e3cf93b44c *README.md
 794beeba5e84c6ec61c7df8e195c9fc8 *build/vignette.rds
 921d5a42f8d7f531b93a1212b6bc54b6 *inst/doc/introduction_en.Rmd
-2b821d4bed7f9df138fc8616cba21fc6 *inst/doc/introduction_en.html
+514052b3e32ec1b0347bf4cc21c41852 *inst/doc/introduction_en.html
 f9701f11dcb7ad9b0625f32e411dbf1e *inst/doc/introduction_fr.Rmd
-91266303a97d91bff741a9d11c93a8ae *inst/doc/introduction_fr.html
+cafdab10c61f3cc1fd9e5b02619b6812 *inst/doc/introduction_fr.html
 875f9f5fc932d2e9567541217567374c *inst/po/en@quot/LC_MESSAGES/R-explor.mo
 d25fef3326c89cb1efcc4714385baff7 *inst/po/fr/LC_MESSAGES/R-explor.mo
 f562ecc92c11718df218ed086aad0a25 *man/CA_var_plot.Rd
@@ -56,7 +56,7 @@ cbd01cd2e9ca3120f01698a3df67d8ad *tests/testthat/test_prepare_results_dudi.coa.R
 77de47178391c27c2c8cf72a10f92bb2 *tests/testthat/test_prepare_results_dudi.pca.R
 4a682ccd41c66e1c27add7b6d5d23d51 *tests/testthat/test_prepare_results_prcomp.R
 4da1a8e228f6550da9da4c554abdb899 *tests/testthat/test_prepare_results_princomp.R
-a7ff6262c786555f0bf35848503342e7 *tests/testthat/test_prepare_results_speMCA.R
+3fb2f23e00fb2dd2023a1316ba049846 *tests/testthat/test_prepare_results_speMCA.R
 b0bb1b538ae3fbe1ab65cad6d0dd4db3 *tests/testthat/test_prepare_results_textmodel_ca.R
 921d5a42f8d7f531b93a1212b6bc54b6 *vignettes/introduction_en.Rmd
 f9701f11dcb7ad9b0625f32e411dbf1e *vignettes/introduction_fr.Rmd
