@@ -12,7 +12,7 @@
 
 <meta name="author" content="Julien Barnier" />
 
-<meta name="date" content="2023-04-29" />
+<meta name="date" content="2026-07-03" />
 
 <title>Exploration interactive de résultats d’ACP/ACM avec explor</title>
 
@@ -29,46 +29,31 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
-<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
-// v0.0.1
-// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
-
-document.addEventListener('DOMContentLoaded', function() {
-  const codeList = document.getElementsByClassName("sourceCode");
-  for (var i = 0; i < codeList.length; i++) {
-    var linkList = codeList[i].getElementsByTagName('a');
-    for (var j = 0; j < linkList.length; j++) {
-      if (linkList[j].innerHTML === "") {
-        linkList[j].setAttribute('aria-hidden', 'true');
-      }
-    }
-  }
-});
-</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -77,58 +62,57 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -354,41 +338,50 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Exploration interactive de résultats d’ACP/ACM avec <code>explor</code></h1>
+<h1 class="title toc-ignore">Exploration interactive de résultats
+d’ACP/ACM avec <code>explor</code></h1>
 <h4 class="author">Julien Barnier</h4>
-<h4 class="date">2023-04-29</h4>
+<h4 class="date">2026-07-03</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#explor">explor</a></li>
-<li><a href="#fonctionnalités">Fonctionnalités</a></li>
-<li><a href="#utilisation">Utilisation</a>
+<li><a href="#explor" id="toc-explor">explor</a></li>
+<li><a href="#fonctionnalités" id="toc-fonctionnalités">Fonctionnalités</a></li>
+<li><a href="#utilisation" id="toc-utilisation">Utilisation</a>
 <ul>
-<li><a href="#prcomp-princomp-et-massmca"><code>prcomp</code>, <code>princomp</code> et <code>MASS::mca</code></a></li>
-<li><a href="#fonctions-de-factominer">Fonctions de <code>FactoMineR</code></a></li>
-<li><a href="#fonctions-dade4">Fonctions d’<code>ade4</code></a></li>
-<li><a href="#fonctions-de-gdatools">Fonctions de <code>GDAtools</code></a></li>
+<li><a href="#prcomp-princomp-et-massmca" id="toc-prcomp-princomp-et-massmca"><code>prcomp</code>,
+<code>princomp</code> et <code>MASS::mca</code></a></li>
+<li><a href="#fonctions-de-factominer" id="toc-fonctions-de-factominer">Fonctions de
+<code>FactoMineR</code></a></li>
+<li><a href="#fonctions-dade4" id="toc-fonctions-dade4">Fonctions
+d’<code>ade4</code></a></li>
+<li><a href="#fonctions-de-gdatools" id="toc-fonctions-de-gdatools">Fonctions de
+<code>GDAtools</code></a></li>
 </ul></li>
-<li><a href="#export-des-graphiques">Export des graphiques</a>
+<li><a href="#export-des-graphiques" id="toc-export-des-graphiques">Export des graphiques</a>
 <ul>
-<li><a href="#export-svg">Export SVG</a></li>
-<li><a href="#récupérer-le-code-r">Récupérer le code R</a></li>
+<li><a href="#export-svg" id="toc-export-svg">Export SVG</a></li>
+<li><a href="#récupérer-le-code-r" id="toc-récupérer-le-code-r">Récupérer le code R</a></li>
 </ul></li>
-<li><a href="#bugs-et-commentaires">Bugs et commentaires</a></li>
+<li><a href="#bugs-et-commentaires" id="toc-bugs-et-commentaires">Bugs
+et commentaires</a></li>
 </ul>
 </div>
 
 <div id="explor" class="section level2">
 <h2>explor</h2>
-<p><code>explor</code> est un package R qui permet l’exploration “interactive” des résultats d’une analyse exploratoire multidimensionnelle.</p>
-<p>Pour le moment il est utilisable avec les types d’analyses suivants :</p>
+<p><code>explor</code> est un package R qui permet l’exploration
+“interactive” des résultats d’une analyse exploratoire
+multidimensionnelle.</p>
+<p>Pour le moment il est utilisable avec les types d’analyses suivants
+:</p>
 <table>
 <colgroup>
-<col width="29%"></col>
-<col width="29%"></col>
-<col width="22%"></col>
-<col width="18%"></col>
+<col width="29%" />
+<col width="29%" />
+<col width="22%" />
+<col width="18%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -421,7 +414,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td>Analyse en composantes principales</td>
 <td>dudi.pca</td>
 <td><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
-<td>Les variables supplémentaires qualitatives ne sont pas prises en charge</td>
+<td>Les variables supplémentaires qualitatives ne sont pas prises en
+charge</td>
 </tr>
 <tr class="odd">
 <td>Analyse des correspondances</td>
@@ -433,7 +427,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td>Analyse des correspondances multiples</td>
 <td>dudi.acm</td>
 <td><a href="https://cran.r-project.org/package=ade4">ade4</a></td>
-<td>Les variables supplémentaires quantitatives ne sont pas prises en charge</td>
+<td>Les variables supplémentaires quantitatives ne sont pas prises en
+charge</td>
 </tr>
 <tr class="odd">
 <td>Analyse des correspondances multiples spécifique</td>
@@ -467,155 +462,228 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tr>
 </tbody>
 </table>
-<p>La philosophie d’<code>explor</code> est de n’être qu’une interface de visualisation, et de ne rien “exécuter” par elle-même. Les analyses et calculs se font dans votre script R, et <code>explor</code> vous aide seulement à visualiser leurs résultats. L’idée est de conserver l’ensemble des commandes dans les scripts et de ne pas risquer d’être un obstacle à la reproductibilité des analyses.</p>
+<p>La philosophie d’<code>explor</code> est de n’être qu’une interface
+de visualisation, et de ne rien “exécuter” par elle-même. Les analyses
+et calculs se font dans votre script R, et <code>explor</code> vous aide
+seulement à visualiser leurs résultats. L’idée est de conserver
+l’ensemble des commandes dans les scripts et de ne pas risquer d’être un
+obstacle à la reproductibilité des analyses.</p>
 </div>
 <div id="fonctionnalités" class="section level2">
 <h2>Fonctionnalités</h2>
-<p>Pour chaque méthode, <code>explor</code> lance une interface Web interactive qui s’affiche soit directement dans RStudio, soit dans votre navigateur. Cette interface comprend une série d’onglets présentant différents tableaux et graphiques. Ceux-ci sont, autant que possible, “interactifs” : les résultats numériques sont affichés sous forme de tableaux dynamiques triables et filtrables (grâce au package <code>DT</code>), et les graphiques, générés pour la plupart par le package <code>scatterD3</code>, ont les fonctionnalités suivantes :</p>
+<p>Pour chaque méthode, <code>explor</code> lance une interface Web
+interactive qui s’affiche soit directement dans RStudio, soit dans votre
+navigateur. Cette interface comprend une série d’onglets présentant
+différents tableaux et graphiques. Ceux-ci sont, autant que possible,
+“interactifs” : les résultats numériques sont affichés sous forme de
+tableaux dynamiques triables et filtrables (grâce au package
+<code>DT</code>), et les graphiques, générés pour la plupart par le
+package <code>scatterD3</code>, ont les fonctionnalités suivantes :</p>
 <ul>
 <li>zoom avec la molette de la souris</li>
 <li>déplacement avec la souris</li>
 <li>affichage de <em>tooltips</em> au survol des points</li>
-<li>mise en valeur des données correspondantes au survol des items de légendes</li>
+<li>mise en valeur des données correspondantes au survol des items de
+légendes</li>
 <li>étiquettes déplaçables</li>
 <li>sélection de points à l’aide d’un outil de type “lasso”</li>
 <li>possibilité d’export du graphique actuel au format SVG</li>
-<li>possibilité de récupérer le code R permettant de reproduire le graphique actuel dans un script ou un document</li>
-<li>les modifications du graphique se font sous la forme de transitions animées</li>
+<li>possibilité de récupérer le code R permettant de reproduire le
+graphique actuel dans un script ou un document</li>
+<li>les modifications du graphique se font sous la forme de transitions
+animées</li>
 </ul>
 <p>À noter que les interfaces sont traduites en français.</p>
 </div>
 <div id="utilisation" class="section level2">
 <h2>Utilisation</h2>
-<p>L’utilisation du package est très simple : il suffit d’appliquer la fonction <code>explor()</code> à l’objet résultant d’une méthode prise en charge.</p>
+<p>L’utilisation du package est très simple : il suffit d’appliquer la
+fonction <code>explor()</code> à l’objet résultant d’une méthode prise
+en charge.</p>
 <div id="prcomp-princomp-et-massmca" class="section level3">
-<h3><code>prcomp</code>, <code>princomp</code> et <code>MASS::mca</code></h3>
-<p>Pour visualiser les résultats de ces fonctions, il suffit de passer l’objet résultat à <code>explor()</code>.</p>
-<p>Voici un exemple avec une ACP réalisée avec <code>princomp</code> :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">data</span>(USArrests)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>pca &lt;-<span class="st"> </span><span class="kw">princomp</span>(USArrests, <span class="dt">cor =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">explor</span>(pca)</span></code></pre></div>
-<p><code>explor</code> permet de visualiser des individus supplémentaires dont les coordonnées ont été calculées avec <code>predict</code>. Il suffit de les ajouter comme un élément nommé <code>supi</code> de l’objet résultat.</p>
+<h3><code>prcomp</code>, <code>princomp</code> et
+<code>MASS::mca</code></h3>
+<p>Pour visualiser les résultats de ces fonctions, il suffit de passer
+l’objet résultat à <code>explor()</code>.</p>
+<p>Voici un exemple avec une ACP réalisée avec <code>princomp</code>
+:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">data</span>(USArrests)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">princomp</span>(USArrests, <span class="at">cor =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">explor</span>(pca)</span></code></pre></div>
+<p><code>explor</code> permet de visualiser des individus
+supplémentaires dont les coordonnées ont été calculées avec
+<code>predict</code>. Il suffit de les ajouter comme un élément nommé
+<code>supi</code> de l’objet résultat.</p>
 <p>Voici un exemple avec <code>prcomp</code> :</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>pca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(USArrests[<span class="dv">6</span><span class="op">:</span><span class="dv">50</span>,], <span class="dt">scale. =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>pca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">predict</span>(pca, USArrests[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">explor</span>(pca)</span></code></pre></div>
-<p>Pour <code>MASS::mca</code>, <code>explor()</code> permet également la visualisation de variables qualitatives supplémentaires. Leurs coordonnées doivent être ajoutées comme un élément nommé <code>supv</code> de l’objet résultat. À noter qu’il est également préférable d’ajouter manuellement les noms de lignes à l’élément <code>supi</code> car <code>predict</code> ne les conserve pas :</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">library</span>(MASS)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>mca &lt;-<span class="st"> </span>MASS<span class="op">::</span><span class="kw">mca</span>(farms[<span class="dv">4</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">nf =</span> <span class="dv">11</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>supi_df &lt;-<span class="st"> </span>farms[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>supi &lt;-<span class="st"> </span><span class="kw">predict</span>(mca, supi_df, <span class="dt">type=</span><span class="st">&quot;row&quot;</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="kw">rownames</span>(supi) &lt;-<span class="st"> </span><span class="kw">rownames</span>(supi_df)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>mca<span class="op">$</span>supi &lt;-<span class="st"> </span>supi</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>mca<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">predict</span>(mca, farms[<span class="dv">4</span><span class="op">:</span><span class="dv">20</span>, <span class="dv">1</span>, <span class="dt">drop=</span><span class="ot">FALSE</span>], <span class="dt">type=</span><span class="st">&quot;factor&quot;</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="kw">explor</span>(mca)</span></code></pre></div>
-<p>À noter que les réultats de ces trois fonctions sont assez limités, elles ne fournissent que les coordonnées des variables et des individus, pas de contributions ou de cosinus carrés par exemple.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(USArrests[<span class="dv">6</span><span class="sc">:</span><span class="dv">50</span>,], <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>pca<span class="sc">$</span>supi <span class="ot">&lt;-</span> <span class="fu">predict</span>(pca, USArrests[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,])</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">explor</span>(pca)</span></code></pre></div>
+<p>Pour <code>MASS::mca</code>, <code>explor()</code> permet également
+la visualisation de variables qualitatives supplémentaires. Leurs
+coordonnées doivent être ajoutées comme un élément nommé
+<code>supv</code> de l’objet résultat. À noter qu’il est également
+préférable d’ajouter manuellement les noms de lignes à l’élément
+<code>supi</code> car <code>predict</code> ne les conserve pas :</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>mca <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mca</span>(farms[<span class="dv">4</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">nf =</span> <span class="dv">11</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>supi_df <span class="ot">&lt;-</span> farms[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>supi <span class="ot">&lt;-</span> <span class="fu">predict</span>(mca, supi_df, <span class="at">type=</span><span class="st">&quot;row&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">rownames</span>(supi) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(supi_df)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>mca<span class="sc">$</span>supi <span class="ot">&lt;-</span> supi</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>mca<span class="sc">$</span>supv <span class="ot">&lt;-</span> <span class="fu">predict</span>(mca, farms[<span class="dv">4</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">1</span>, <span class="at">drop=</span><span class="cn">FALSE</span>], <span class="at">type=</span><span class="st">&quot;factor&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">explor</span>(mca)</span></code></pre></div>
+<p>À noter que les réultats de ces trois fonctions sont assez limités,
+elles ne fournissent que les coordonnées des variables et des individus,
+pas de contributions ou de cosinus carrés par exemple.</p>
 </div>
 <div id="fonctions-de-factominer" class="section level3">
 <h3>Fonctions de <code>FactoMineR</code></h3>
-<p>Pour les fonctions de <code>FactoMineR</code> prises en charge, il suffit de passer l’objet contenant les résultats directement à<code>explor()</code>.</p>
-<p>Exemple d’analyse en composantes principales avec <code>FactoMineR::PCA</code> :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">library</span>(FactoMineR)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">data</span>(decathlon)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>pca &lt;-<span class="st"> </span><span class="kw">PCA</span>(decathlon[,<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>], <span class="dt">quanti.sup =</span> <span class="dv">11</span><span class="op">:</span><span class="dv">12</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="kw">explor</span>(pca)</span></code></pre></div>
-<p>Exemple d’analyse des correspondances simples avec <code>FactoMiner::CA</code> :</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">data</span>(children)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>res.ca &lt;-<span class="st"> </span><span class="kw">CA</span>(children, <span class="dt">row.sup =</span> <span class="dv">15</span><span class="op">:</span><span class="dv">18</span>, <span class="dt">col.sup =</span> <span class="dv">6</span><span class="op">:</span><span class="dv">8</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="kw">explor</span>(res.ca)</span></code></pre></div>
-<p>Exemple d’analyse des correspondances multiples avec <code>FactoMineR::MCA</code> :</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">library</span>(FactoMineR)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">data</span>(hobbies)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>mca &lt;-<span class="st"> </span><span class="kw">MCA</span>(hobbies[<span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>, <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>,<span class="dv">21</span><span class="op">:</span><span class="dv">23</span>)], <span class="dt">quali.sup =</span> <span class="dv">9</span><span class="op">:</span><span class="dv">10</span>, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>           <span class="dt">quanti.sup =</span> <span class="dv">11</span>, <span class="dt">ind.sup =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="kw">explor</span>(mca)</span></code></pre></div>
+<p>Pour les fonctions de <code>FactoMineR</code> prises en charge, il
+suffit de passer l’objet contenant les résultats directement
+à<code>explor()</code>.</p>
+<p>Exemple d’analyse en composantes principales avec
+<code>FactoMineR::PCA</code> :</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">data</span>(decathlon)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">PCA</span>(decathlon[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>], <span class="at">quanti.sup =</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">explor</span>(pca)</span></code></pre></div>
+<p>Exemple d’analyse des correspondances simples avec
+<code>FactoMiner::CA</code> :</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">data</span>(children)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>res.ca <span class="ot">&lt;-</span> <span class="fu">CA</span>(children, <span class="at">row.sup =</span> <span class="dv">15</span><span class="sc">:</span><span class="dv">18</span>, <span class="at">col.sup =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">8</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">explor</span>(res.ca)</span></code></pre></div>
+<p>Exemple d’analyse des correspondances multiples avec
+<code>FactoMineR::MCA</code> :</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">data</span>(hobbies)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>mca <span class="ot">&lt;-</span> <span class="fu">MCA</span>(hobbies[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">21</span><span class="sc">:</span><span class="dv">23</span>)], <span class="at">quali.sup =</span> <span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>           <span class="at">quanti.sup =</span> <span class="dv">11</span>, <span class="at">ind.sup =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">explor</span>(mca)</span></code></pre></div>
 </div>
 <div id="fonctions-dade4" class="section level3">
 <h3>Fonctions d’<code>ade4</code></h3>
-<p>Les résultats des fonctions d’<code>ade4</code> prises en charge peuvent également être directement passées à <code>explor()</code>.</p>
+<p>Les résultats des fonctions d’<code>ade4</code> prises en charge
+peuvent également être directement passées à <code>explor()</code>.</p>
 <p>Par exemple, pour visualiser les résultats d’une ACP :</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">library</span>(ade4)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">data</span>(deug)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>pca &lt;-<span class="st"> </span><span class="kw">dudi.pca</span>(deug<span class="op">$</span>tab, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="kw">explor</span>(pca)</span></code></pre></div>
-<p>Des étapes supplémentaires sont nécessaires si on souhaite ajouter des éléments supplémentaires, car <code>ade4</code> ne les inclut pas directement dans l’objet résultat. Il faut donc calculer les coordonnées de ces éléments avec <code>suprow</code> ou <code>supcol</code>, et les ajouter comme éléments <code>supi</code> (pour les individus supplémentaires) ou <code>supv</code> (pour les variables supplémentaires) de l’objet résultat.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(ade4)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">data</span>(deug)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">dudi.pca</span>(deug<span class="sc">$</span>tab, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">scannf =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="dv">5</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">explor</span>(pca)</span></code></pre></div>
+<p>Des étapes supplémentaires sont nécessaires si on souhaite ajouter
+des éléments supplémentaires, car <code>ade4</code> ne les inclut pas
+directement dans l’objet résultat. Il faut donc calculer les coordonnées
+de ces éléments avec <code>suprow</code> ou <code>supcol</code>, et les
+ajouter comme éléments <code>supi</code> (pour les individus
+supplémentaires) ou <code>supv</code> (pour les variables
+supplémentaires) de l’objet résultat.</p>
 <p>Voici un exemple de comment faire tout cela pour une ACP :</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">data</span>(deug)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>d &lt;-<span class="st"> </span>deug<span class="op">$</span>tab</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>sup_var &lt;-<span class="st"> </span>d[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dv">8</span><span class="op">:</span><span class="dv">9</span>]</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>sup_ind &lt;-<span class="st"> </span>d[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">-</span>(<span class="dv">8</span><span class="op">:</span><span class="dv">9</span>)]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>pca &lt;-<span class="st"> </span><span class="kw">dudi.pca</span>(d[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="op">-</span>(<span class="dv">8</span><span class="op">:</span><span class="dv">9</span>)], <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">## Individus supplémentaires</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>pca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(pca, sup_ind)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="co">## Variables supplémentaires</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>pca<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(pca, <span class="kw">dudi.pca</span>(sup_var, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)<span class="op">$</span>tab)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a><span class="kw">explor</span>(pca)</span></code></pre></div>
-<p>Il est nécessaire de faire la même chose en cas d’éléments supplémentaires pour une analyse des correspondances multiples :</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="kw">data</span>(banque)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>d &lt;-<span class="st"> </span>banque[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>),<span class="op">-</span>(<span class="dv">19</span><span class="op">:</span><span class="dv">21</span>)]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>ind_sup &lt;-<span class="st"> </span>banque[<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="op">-</span>(<span class="dv">19</span><span class="op">:</span><span class="dv">21</span>)]</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>var_sup &lt;-<span class="st"> </span>banque[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>),<span class="dv">19</span><span class="op">:</span><span class="dv">21</span>]</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>acm &lt;-<span class="st"> </span><span class="kw">dudi.acm</span>(d, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="co">## Variables supplémentaires</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>acm<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">supcol</span>(acm, <span class="kw">dudi.acm</span>(var_sup, <span class="dt">scannf =</span> <span class="ot">FALSE</span>, <span class="dt">nf =</span> <span class="dv">5</span>)<span class="op">$</span>tab)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co">## Individus supplémentaires</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>acm<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">suprow</span>(acm, ind_sup)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="kw">explor</span>(acm)</span></code></pre></div>
-<p>Pour une analyse des correspondances simples, on peut afficher des lignes ou colonnes supplémentaires en ajoutant leurs coordonnées à des éléments nommés <code>supr</code> ou <code>supc</code> :</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">data</span>(bordeaux)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>tab &lt;-<span class="st"> </span>bordeaux</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>row_sup &lt;-<span class="st"> </span>tab[<span class="dv">5</span>,<span class="op">-</span><span class="dv">4</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>col_sup &lt;-<span class="st"> </span>tab[<span class="op">-</span><span class="dv">5</span>,<span class="dv">4</span>]</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>coa &lt;-<span class="st"> </span><span class="kw">dudi.coa</span>(tab[<span class="op">-</span><span class="dv">5</span>,<span class="op">-</span><span class="dv">4</span>], <span class="dt">nf =</span> <span class="dv">5</span>, <span class="dt">scannf =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a>coa<span class="op">$</span>supr &lt;-<span class="st"> </span><span class="kw">suprow</span>(coa, row_sup)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>coa<span class="op">$</span>supc &lt;-<span class="st"> </span><span class="kw">supcol</span>(coa, col_sup)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="kw">explor</span>(coa)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">data</span>(deug)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>d <span class="ot">&lt;-</span> deug<span class="sc">$</span>tab</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>sup_var <span class="ot">&lt;-</span> d[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>sup_ind <span class="ot">&lt;-</span> d[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="sc">-</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)]</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">dudi.pca</span>(d[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="sc">-</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>)], <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">scannf =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="dv">5</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="do">## Individus supplémentaires</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>pca<span class="sc">$</span>supi <span class="ot">&lt;-</span> <span class="fu">suprow</span>(pca, sup_ind)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="do">## Variables supplémentaires</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>pca<span class="sc">$</span>supv <span class="ot">&lt;-</span> <span class="fu">supcol</span>(pca, <span class="fu">dudi.pca</span>(sup_var, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">scannf =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>tab)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="fu">explor</span>(pca)</span></code></pre></div>
+<p>Il est nécessaire de faire la même chose en cas d’éléments
+supplémentaires pour une analyse des correspondances multiples :</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">data</span>(banque)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>d <span class="ot">&lt;-</span> banque[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>),<span class="sc">-</span>(<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>ind_sup <span class="ot">&lt;-</span> banque[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="sc">-</span>(<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>)]</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>var_sup <span class="ot">&lt;-</span> banque[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>),<span class="dv">19</span><span class="sc">:</span><span class="dv">21</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>acm <span class="ot">&lt;-</span> <span class="fu">dudi.acm</span>(d, <span class="at">scannf =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="dv">5</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="do">## Variables supplémentaires</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>acm<span class="sc">$</span>supv <span class="ot">&lt;-</span> <span class="fu">supcol</span>(acm, <span class="fu">dudi.acm</span>(var_sup, <span class="at">scannf =</span> <span class="cn">FALSE</span>, <span class="at">nf =</span> <span class="dv">5</span>)<span class="sc">$</span>tab)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="do">## Individus supplémentaires</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>acm<span class="sc">$</span>supi <span class="ot">&lt;-</span> <span class="fu">suprow</span>(acm, ind_sup)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="fu">explor</span>(acm)</span></code></pre></div>
+<p>Pour une analyse des correspondances simples, on peut afficher des
+lignes ou colonnes supplémentaires en ajoutant leurs coordonnées à des
+éléments nommés <code>supr</code> ou <code>supc</code> :</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">data</span>(bordeaux)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>tab <span class="ot">&lt;-</span> bordeaux</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>row_sup <span class="ot">&lt;-</span> tab[<span class="dv">5</span>,<span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>col_sup <span class="ot">&lt;-</span> tab[<span class="sc">-</span><span class="dv">5</span>,<span class="dv">4</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>coa <span class="ot">&lt;-</span> <span class="fu">dudi.coa</span>(tab[<span class="sc">-</span><span class="dv">5</span>,<span class="sc">-</span><span class="dv">4</span>], <span class="at">nf =</span> <span class="dv">5</span>, <span class="at">scannf =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>coa<span class="sc">$</span>supr <span class="ot">&lt;-</span> <span class="fu">suprow</span>(coa, row_sup)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>coa<span class="sc">$</span>supc <span class="ot">&lt;-</span> <span class="fu">supcol</span>(coa, col_sup)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="fu">explor</span>(coa)</span></code></pre></div>
 </div>
 <div id="fonctions-de-gdatools" class="section level3">
 <h3>Fonctions de <code>GDAtools</code></h3>
-<p>Les résultats des fonctions de <code>GDAtools</code> prises en charge peuvent également être directement passées à <code>explor()</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">library</span>(GDAtools)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">data</span>(Music)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">excl =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="kw">explor</span>(mca)</span></code></pre></div>
-<p>Pour ajouter des individus supplémentaires, il est nécessaire de calculer leurs données associées à l’aide de la fonction <code>indsup</code>, puis de les ajouter manuellement comme un élément nommé <code>supi</code> de l’objet résultat :</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music),<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">excl =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>mca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca, Music[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="kw">explor</span>(mca)</span></code></pre></div>
-<p>Pour ajouter des variables supplémentaires, il faut calculer leurs données associées à l’aide de la fonction <code>speMCA_varsup</code>, et je les ajouter manuellement comme un élément <code>supv</code> de l’objet résultat :</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>mca &lt;-<span class="st"> </span><span class="kw">speMCA</span>(Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music), <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">excl =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>mca<span class="op">$</span>supi &lt;-<span class="st"> </span><span class="kw">indsup</span>(mca, Music[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>mca<span class="op">$</span>supv &lt;-<span class="st"> </span><span class="kw">speMCA_varsup</span>(mca, Music[<span class="dv">3</span><span class="op">:</span><span class="kw">nrow</span>(Music), <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>])</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="kw">explor</span>(mca)</span></code></pre></div>
+<p>Les résultats des fonctions de <code>GDAtools</code> prises en charge
+peuvent également être directement passées à <code>explor()</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">library</span>(GDAtools)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">data</span>(Music)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>mca <span class="ot">&lt;-</span> <span class="fu">speMCA</span>(Music[,<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">excl =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">explor</span>(mca)</span></code></pre></div>
+<p>Pour ajouter des individus supplémentaires, il est nécessaire de
+calculer leurs données associées à l’aide de la fonction
+<code>indsup</code>, puis de les ajouter manuellement comme un élément
+nommé <code>supi</code> de l’objet résultat :</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>mca <span class="ot">&lt;-</span> <span class="fu">speMCA</span>(Music[<span class="dv">3</span><span class="sc">:</span><span class="fu">nrow</span>(Music),<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">excl =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">15</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>mca<span class="sc">$</span>supi <span class="ot">&lt;-</span> <span class="fu">indsup</span>(mca, Music[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">explor</span>(mca)</span></code></pre></div>
+<p>Pour ajouter des variables supplémentaires, il faut calculer leurs
+données associées à l’aide de la fonction <code>speMCA_varsup</code>, et
+je les ajouter manuellement comme un élément <code>supv</code> de
+l’objet résultat :</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>mca <span class="ot">&lt;-</span> <span class="fu">speMCA</span>(Music[<span class="dv">3</span><span class="sc">:</span><span class="fu">nrow</span>(Music), <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">excl =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">12</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>mca<span class="sc">$</span>supi <span class="ot">&lt;-</span> <span class="fu">indsup</span>(mca, Music[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>mca<span class="sc">$</span>supv <span class="ot">&lt;-</span> <span class="fu">speMCA_varsup</span>(mca, Music[<span class="dv">3</span><span class="sc">:</span><span class="fu">nrow</span>(Music), <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>])</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="fu">explor</span>(mca)</span></code></pre></div>
 </div>
 </div>
 <div id="export-des-graphiques" class="section level2">
 <h2>Export des graphiques</h2>
-<p><code>explor</code> offre deux possibilités pour exporter les graphiques affichés dans l’interface.</p>
+<p><code>explor</code> offre deux possibilités pour exporter les
+graphiques affichés dans l’interface.</p>
 <div id="export-svg" class="section level3">
 <h3>Export SVG</h3>
-<p>Pour exporter le graphique actuellement affiché au format SVG, cliquez sur le bouton <em>Exporter en SVG</em> (icône en bas de la barre latérale gauche), ou choisissez l’entrée <em>Export to SVG</em> du menu “engrenage” du graphique.</p>
-<p>Le SVG est un format de dessin vectoriel, éditable et redimensionnable sans perte à l’aide d’un logiciel comme <a href="https://inkscape.org/">Inkscape</a>.</p>
-<p>La fonction d’export SVG peut rencontrer des problèmes quand elle est effectuée depuis RStudio. Si c’est le cas, ouvrez d’abord <code>explor</code> dans un navigateur en cliquant sur <em>Open in Browser</em>, avant d’exporter.</p>
+<p>Pour exporter le graphique actuellement affiché au format SVG,
+cliquez sur le bouton <em>Exporter en SVG</em> (icône en bas de la barre
+latérale gauche), ou choisissez l’entrée <em>Export to SVG</em> du menu
+“engrenage” du graphique.</p>
+<p>Le SVG est un format de dessin vectoriel, éditable et
+redimensionnable sans perte à l’aide d’un logiciel comme <a href="https://inkscape.org/">Inkscape</a>.</p>
+<p>La fonction d’export SVG peut rencontrer des problèmes quand elle est
+effectuée depuis RStudio. Si c’est le cas, ouvrez d’abord
+<code>explor</code> dans un navigateur en cliquant sur <em>Open in
+Browser</em>, avant d’exporter.</p>
 </div>
 <div id="récupérer-le-code-r" class="section level3">
 <h3>Récupérer le code R</h3>
-<p>L’autre possibilité est de récupérer le code R permettant de générer le graphique actuellement affiché, ce qui permet de le reproduire ensuite dans un script ou un document <em>Rmarkdown</em>.</p>
-<p>Pour cela, cliquez sur le bouton <em>Obtenir le code R</em> en bas de la barre latérale. Une boîte de dialogue s’affiche, vous n’avez plus qu’à copier/coller le code R qui s’y trouve.</p>
-<p>À noter que ce code R respecte le zoom effectué sur le graphique au moment de l’export, mais pas les positions des labels. Si vous souhaitez conserver celles-ci, il faut d’abord les enregistrer dans un fichier CSV avec l’entrée <em>Export labels positions</em> du menu “Engrenage”. Ensuite, dans votre script, chargez ce fichier CSV dans un objet à l’aide de <code>read.csv</code> puis passez cet objet à l’argument <code>export_labels_positions</code> dans le code généré :</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>labels &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;position_labels.csv&quot;</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>res &lt;-<span class="st"> </span>explor<span class="op">::</span><span class="kw">prepare_results</span>(mca)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>explor<span class="op">::</span><span class="kw">MCA_var_plot</span>(res, <span class="dt">xax =</span> <span class="dv">1</span>, <span class="dt">yax =</span> <span class="dv">2</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>    <span class="dt">var_sup =</span> <span class="ot">TRUE</span>, , <span class="dt">var_lab_min_contrib =</span> <span class="dv">0</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>    <span class="dt">col_var =</span> <span class="st">&quot;Variable&quot;</span>, <span class="dt">symbol_var =</span> <span class="st">&quot;Type&quot;</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>    <span class="dt">size_var =</span> <span class="ot">NULL</span>, <span class="dt">size_range =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">300</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>    <span class="dt">labels_size =</span> <span class="dv">10</span>, <span class="dt">point_size =</span> <span class="dv">56</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a>    <span class="dt">transitions =</span> <span class="ot">TRUE</span>, <span class="dt">labels_positions =</span> labels)</span></code></pre></div>
+<p>L’autre possibilité est de récupérer le code R permettant de générer
+le graphique actuellement affiché, ce qui permet de le reproduire
+ensuite dans un script ou un document <em>Rmarkdown</em>.</p>
+<p>Pour cela, cliquez sur le bouton <em>Obtenir le code R</em> en bas de
+la barre latérale. Une boîte de dialogue s’affiche, vous n’avez plus
+qu’à copier/coller le code R qui s’y trouve.</p>
+<p>À noter que ce code R respecte le zoom effectué sur le graphique au
+moment de l’export, mais pas les positions des labels. Si vous souhaitez
+conserver celles-ci, il faut d’abord les enregistrer dans un fichier CSV
+avec l’entrée <em>Export labels positions</em> du menu “Engrenage”.
+Ensuite, dans votre script, chargez ce fichier CSV dans un objet à
+l’aide de <code>read.csv</code> puis passez cet objet à l’argument
+<code>export_labels_positions</code> dans le code généré :</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;position_labels.csv&quot;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>res <span class="ot">&lt;-</span> explor<span class="sc">::</span><span class="fu">prepare_results</span>(mca)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>explor<span class="sc">::</span><span class="fu">MCA_var_plot</span>(res, <span class="at">xax =</span> <span class="dv">1</span>, <span class="at">yax =</span> <span class="dv">2</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="at">var_sup =</span> <span class="cn">TRUE</span>, , <span class="at">var_lab_min_contrib =</span> <span class="dv">0</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="at">col_var =</span> <span class="st">&quot;Variable&quot;</span>, <span class="at">symbol_var =</span> <span class="st">&quot;Type&quot;</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="at">size_var =</span> <span class="cn">NULL</span>, <span class="at">size_range =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">300</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    <span class="at">labels_size =</span> <span class="dv">10</span>, <span class="at">point_size =</span> <span class="dv">56</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    <span class="at">transitions =</span> <span class="cn">TRUE</span>, <span class="at">labels_positions =</span> labels)</span></code></pre></div>
 </div>
 </div>
 <div id="bugs-et-commentaires" class="section level2">
 <h2>Bugs et commentaires</h2>
-<p><code>explor</code> est un package très récent, qui comporte donc certainement des bugs et autres problèmes. N’hésitez pas à les signaler par mail ou en créant une <a href="https://github.com/juba/explor/issues"><em>issue</em> sur GitHub</a>.</p>
+<p><code>explor</code> est un package très récent, qui comporte donc
+certainement des bugs et autres problèmes. N’hésitez pas à les signaler
+par mail ou en créant une <a href="https://github.com/juba/explor/issues"><em>issue</em> sur
+GitHub</a>.</p>
 </div>
 
 
